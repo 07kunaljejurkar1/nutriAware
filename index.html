@@ -23,7 +23,6 @@
             margin: 0;
             padding: 0;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            scroll-behavior: smooth;
         }
 
         body {
@@ -46,7 +45,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            padding: 1.5rem 1rem;
+            padding: 1.2rem 1rem;
             z-index: 1000;
             overflow-y: auto;
         }
@@ -59,33 +58,42 @@
             display: flex;
             align-items: center;
             gap: 0.6rem;
-            padding: 0.2rem 0.5rem 1.2rem 0.5rem;
+            padding: 0.2rem 0.5rem 1rem 0.5rem;
             border-bottom: 1px solid var(--border);
         }
 
         .sidebar-links {
             display: flex;
             flex-direction: column;
-            gap: 0.35rem;
-            margin-top: 1.2rem;
+            gap: 0.25rem;
+            margin-top: 1rem;
         }
 
-        .sidebar-links a {
+        .nav-tab {
             display: flex;
             align-items: center;
-            gap: 0.8rem;
-            text-decoration: none;
+            gap: 0.75rem;
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
             color: var(--text-dark);
             font-weight: 600;
             font-size: 0.92rem;
-            padding: 0.65rem 0.85rem;
+            padding: 0.6rem 0.8rem;
             border-radius: 8px;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .sidebar-links a:hover {
+        .nav-tab:hover {
             background: var(--primary-light);
             color: var(--primary);
+        }
+
+        .nav-tab.active {
+            background: var(--primary);
+            color: white;
         }
 
         .sidebar-footer {
@@ -93,16 +101,29 @@
             padding-top: 1rem;
         }
 
-        /* ---------------- MAIN CONTENT ---------------- */
+        /* ---------------- MAIN CONTENT & SLIDE DISPLAY ---------------- */
         main.main-content {
             margin-left: var(--sidebar-width);
             width: calc(100% - var(--sidebar-width));
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        section {
-            padding: 3.5rem 6%;
-            border-bottom: 1px solid var(--border);
+        .slide-view {
+            display: none;
+            padding: 3rem 6%;
+            animation: fadeIn 0.25s ease-in-out;
+        }
+
+        .slide-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .section-title {
@@ -140,6 +161,23 @@
             font-size: 0.85rem;
         }
 
+        /* Hero Slide */
+        .hero-banner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            padding: 3.5rem;
+            border-radius: 16px;
+        }
+
+        .hero-banner h1 {
+            font-size: 2.6rem;
+            line-height: 1.2;
+            color: var(--primary-hover);
+            margin-bottom: 0.8rem;
+        }
+
         /* Standard Cards Grid */
         .card-grid {
             display: grid;
@@ -161,28 +199,7 @@
             margin-bottom: 0.6rem;
         }
 
-        /* Hero */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            min-height: 45vh;
-        }
-
-        .hero h1 {
-            font-size: 2.6rem;
-            line-height: 1.2;
-            color: var(--primary-hover);
-            margin-bottom: 0.8rem;
-        }
-
         /* Dashboard Styles */
-        .dashboard-section {
-            background: #f0fdf4;
-            display: none;
-        }
-
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -263,12 +280,103 @@
             font-size: 0.9rem;
         }
 
+        /* ---------------- AI RECIPE CHATBOX FULL VIEW ---------------- */
+        .ai-chat-slide-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+            overflow: hidden;
+        }
+
+        .ai-chat-header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ai-chat-body {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: #f8fafc;
+        }
+
+        .chat-bubble {
+            padding: 0.8rem 1.1rem;
+            border-radius: 10px;
+            font-size: 0.92rem;
+            max-width: 85%;
+            line-height: 1.5;
+        }
+
+        .chat-bubble.bot {
+            background: white;
+            border: 1px solid var(--border);
+            align-self: flex-start;
+        }
+
+        .chat-bubble.user {
+            background: var(--primary);
+            color: white;
+            align-self: flex-end;
+        }
+
+        .quick-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.6rem;
+        }
+
+        .chip-btn {
+            background: #e2e8f0;
+            border: none;
+            border-radius: 12px;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .chip-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .ai-chat-footer {
+            display: flex;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .ai-chat-footer input {
+            flex: 1;
+            padding: 0.65rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+
         /* ---------------- AI SCANNER COMPONENT ---------------- */
         .scanner-container {
             background: white;
             border: 2px dashed var(--primary);
             border-radius: 12px;
-            padding: 2.5rem 1.5rem;
+            padding: 3rem 2rem;
             text-align: center;
             max-width: 600px;
             margin: 0 auto;
@@ -334,7 +442,7 @@
             margin: 0.4rem 0 0.8rem 0;
         }
 
-        /* ---------------- ANALYTICS PROGRESS BARS ---------------- */
+        /* ---------------- ANALYTICS ---------------- */
         .analytics-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -400,7 +508,8 @@
             background: #0f172a;
             color: white;
             text-align: center;
-            padding: 2.5rem 5%;
+            padding: 2rem 5%;
+            margin-top: auto;
         }
 
         footer p {
@@ -415,21 +524,22 @@
     <!-- 1. LEFT VERTICAL SIDEBAR -->
     <aside class="sidebar">
         <div>
-            <a href="#home" class="sidebar-brand">
+            <div class="sidebar-brand">
                 <span>🥗</span>
                 <span>nutriAware</span>
-            </a>
+            </div>
             <div class="sidebar-links">
-                <!-- Requested Order: Home -> Dashboard -> AI Scanner -> Diet Recipes -> Water Tracker -> Analytics -> Nutrition -> Healthy Food -> Meals -->
-                <a href="#home"><span>🏠</span> <span>Home</span></a>
-                <a href="#dashboard" id="sidebarDashLink" style="display: none;"><span>📊</span> <span>Dashboard</span></a>
-                <a href="#ai-scanner"><span>📸</span> <span>AI Scanner</span></a>
-                <a href="#diet-recipes"><span>🥗</span> <span>Diet Recipes</span></a>
-                <a href="#water-tracker"><span>💧</span> <span>Water Tracker</span></a>
-                <a href="#analytics"><span>📈</span> <span>Analytics</span></a>
-                <a href="#nutrition"><span>🔬</span> <span>Nutrition</span></a>
-                <a href="#healthy"><span>🍎</span> <span>Healthy Food</span></a>
-                <a href="#meals"><span>🍽️</span> <span>Meals</span></a>
+                <!-- Clickable Tabs to switch slides -->
+                <button class="nav-tab active" onclick="switchSlide('home')"><span>🏠</span> <span>Home</span></button>
+                <button class="nav-tab" id="dashNavTab" onclick="switchSlide('dashboard')" style="display: none;"><span>📊</span> <span>Dashboard</span></button>
+                <button class="nav-tab" onclick="switchSlide('ai-chatbox')"><span>🤖</span> <span>AI Chatbox</span></button>
+                <button class="nav-tab" onclick="switchSlide('ai-scanner')"><span>📸</span> <span>AI Scanner</span></button>
+                <button class="nav-tab" onclick="switchSlide('diet-recipes')"><span>🥗</span> <span>Diet Recipes</span></button>
+                <button class="nav-tab" onclick="switchSlide('water-tracker')"><span>💧</span> <span>Water Tracker</span></button>
+                <button class="nav-tab" onclick="switchSlide('analytics')"><span>📈</span> <span>Analytics</span></button>
+                <button class="nav-tab" onclick="switchSlide('nutrition')"><span>🔬</span> <span>Nutrition</span></button>
+                <button class="nav-tab" onclick="switchSlide('healthy')"><span>🍎</span> <span>Healthy Food</span></button>
+                <button class="nav-tab" onclick="switchSlide('meals')"><span>🍽️</span> <span>Meals</span></button>
             </div>
         </div>
 
@@ -440,26 +550,57 @@
         </div>
     </aside>
 
-    <!-- 2. MAIN PAGE CONTENT -->
+    <!-- 2. MAIN VIEW AREA (SHOWS INDIVIDUAL SLIDES) -->
     <main class="main-content">
 
-        <!-- 1. Home -->
-        <section id="home" class="hero">
-            <div>
-                <h1>Eat Smart.<br>Live Healthy.</h1>
-                <p style="font-size: 1.15rem; color: var(--text-dark); margin-bottom: 1.2rem; max-width: 500px;">
-                    A smart nutrition platform helping college students scan campus food, track hydration, and adopt balanced mess habits.
-                </p>
-                <a href="#dashboard" class="btn-primary" style="text-decoration: none; display: inline-block;">Open Student Hub →</a>
+        <!-- SLIDE 1: HOME -->
+        <div id="slide-home" class="slide-view active">
+            <div class="hero-banner">
+                <div>
+                    <h1>Eat Smart.<br>Live Healthy.</h1>
+                    <p style="font-size: 1.15rem; color: var(--text-dark); margin-bottom: 1.4rem; max-width: 500px;">
+                        A smart nutrition platform helping college students scan campus food, track hydration, explore 60+ recipes, and consult NutriBot AI.
+                    </p>
+                    <button class="btn-primary" onclick="switchSlide('ai-chatbox')">Open AI Chatbox →</button>
+                </div>
+                <div style="font-size: 5rem;">🥗🍎🥑</div>
             </div>
-            <div style="font-size: 4.5rem;">🥗🍎🥑</div>
-        </section>
 
-        <!-- 2. Dashboard (Switched to 2nd position) -->
-        <section id="dashboard" class="dashboard-section">
+            <div style="margin-top: 3rem;">
+                <div class="section-title">
+                    <h2>Platform Features</h2>
+                    <p>Select any tool from the sidebar to begin.</p>
+                </div>
+                <div class="card-grid">
+                    <div class="card" onclick="switchSlide('ai-chatbox')" style="cursor: pointer;">
+                        <div class="card-icon">🤖</div>
+                        <h3>AI Recipe Chatbox</h3>
+                        <p>Instant guidance on 60+ student and hostel meals.</p>
+                    </div>
+                    <div class="card" onclick="switchSlide('ai-scanner')" style="cursor: pointer;">
+                        <div class="card-icon">📸</div>
+                        <h3>AI Scanner</h3>
+                        <p>Analyze nutrients directly from meal images.</p>
+                    </div>
+                    <div class="card" onclick="switchSlide('water-tracker')" style="cursor: pointer;">
+                        <div class="card-icon">💧</div>
+                        <h3>Hydration Tracker</h3>
+                        <p>Track daily water goal to stay focused in class.</p>
+                    </div>
+                    <div class="card" onclick="switchSlide('diet-recipes')" style="cursor: pointer;">
+                        <div class="card-icon">🥗</div>
+                        <h3>Diet Recipes</h3>
+                        <p>Browse healthy meals across all meal categories.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: DASHBOARD -->
+        <div id="slide-dashboard" class="slide-view">
             <div class="section-title" style="text-align: left; margin-bottom: 1.5rem;">
                 <h2>👋 Welcome, <span id="studentDisplayName">Student</span></h2>
-                <p>Track daily calories, hydration progress, and view canteen swaps.</p>
+                <p>Track calories, hydration progress, and view canteen swaps.</p>
             </div>
 
             <div class="stats-grid">
@@ -509,41 +650,71 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 3. AI Scanner Section -->
-        <section id="ai-scanner">
+        <!-- SLIDE 3: AI CHATBOX -->
+        <div id="slide-ai-chatbox" class="slide-view">
+            <div class="section-title">
+                <h2>🤖 NutriBot AI Recipe Assistant</h2>
+                <p>Ask anything about healthy eating or choose from 60+ recipes!</p>
+            </div>
+
+            <div class="ai-chat-slide-container">
+                <div class="ai-chat-header">
+                    <h3 style="font-size: 1.1rem;">NutriBot Assistant</h3>
+                    <span style="font-size: 0.75rem; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">60+ Recipes Active</span>
+                </div>
+                <div class="ai-chat-body" id="chatBody">
+                    <div class="chat-bubble bot">
+                        Hello! I am your AI Recipe Assistant. Ask me for quick recipes suitable for hostel rooms, mess food, or student budgets!
+                        <div class="quick-chips">
+                            <button class="chip-btn" onclick="quickAsk('Breakfast')">🍳 Breakfast</button>
+                            <button class="chip-btn" onclick="quickAsk('High Protein')">💪 High Protein</button>
+                            <button class="chip-btn" onclick="quickAsk('Hostel Snack')">⚡ Hostel Snacks</button>
+                            <button class="chip-btn" onclick="quickAsk('Drinks')">🥤 Healthy Drinks</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ai-chat-footer">
+                    <input type="text" id="chatInput" placeholder="Ask for a recipe (e.g., Poha, Paneer, Oats)..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+                    <button class="btn-primary" onclick="sendChatMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: AI SCANNER -->
+        <div id="slide-ai-scanner" class="slide-view">
             <div class="section-title">
                 <h2>📸 AI Food Nutrition Scanner</h2>
-                <p>Upload or take a photo of your mess plate to analyze nutrients instantly.</p>
+                <p>Upload or snap a photo of your mess meal to analyze calories and macros.</p>
             </div>
             
             <div class="scanner-container" onclick="document.getElementById('foodImageUpload').click()">
                 <input type="file" id="foodImageUpload" accept="image/*" style="display: none;" onchange="simulateAIScan(event)">
-                <div style="font-size: 3rem;">📷</div>
-                <h3 style="margin-top: 0.5rem; color: var(--primary);">Tap to Upload or Snap Meal Photo</h3>
+                <div style="font-size: 3.5rem;">📷</div>
+                <h3 style="margin-top: 0.5rem; color: var(--primary);">Tap to Upload Meal Photo</h3>
                 <p style="color: var(--text-muted); font-size: 0.9rem;">Supports mess thalis, sandwiches, snacks, and fruits</p>
             </div>
 
             <div id="scannerResult" class="scanner-results">
                 <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
-                    <h3 id="detectedFoodName" style="color: var(--primary);">Detected: Vegetable Thali</h3>
-                    <span style="background: var(--primary-light); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">94% Accuracy</span>
+                    <h3 id="detectedFoodName" style="color: var(--primary);">Detected: Indian Vegetable Thali</h3>
+                    <span style="background: var(--primary-light); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">94% Match</span>
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; text-align: center;">
-                    <div><small>Calories</small><h4 id="scanCal">420 kcal</h4></div>
-                    <div><small>Protein</small><h4 id="scanProt">14g</h4></div>
-                    <div><small>Carbs</small><h4 id="scanCarbs">62g</h4></div>
-                    <div><small>Fats</small><h4 id="scanFats">11g</h4></div>
+                    <div><small>Calories</small><h4>420 kcal</h4></div>
+                    <div><small>Protein</small><h4>14g</h4></div>
+                    <div><small>Carbs</small><h4>62g</h4></div>
+                    <div><small>Fats</small><h4>11g</h4></div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 4. Diet Recipes Section -->
-        <section id="diet-recipes" style="background: white;">
+        <!-- SLIDE 5: DIET RECIPES -->
+        <div id="slide-diet-recipes" class="slide-view">
             <div class="section-title">
                 <h2>🥗 60+ Healthy Diet Recipes</h2>
-                <p>Easy, budget-friendly recipes designed for mess and hostel life.</p>
+                <p>Nutritious and budget-friendly meals designed for college life.</p>
             </div>
 
             <div class="recipe-filter">
@@ -555,24 +726,22 @@
                 <button class="filter-btn" onclick="filterRecipeCategory('drinks')">Drinks</button>
             </div>
 
-            <div class="recipe-grid" id="recipeContainer">
-                <!-- Populated via JavaScript with 60 recipes -->
-            </div>
-        </section>
+            <div class="recipe-grid" id="recipeContainer"></div>
+        </div>
 
-        <!-- 5. Water Tracker Section -->
-        <section id="water-tracker">
+        <!-- SLIDE 6: WATER TRACKER -->
+        <div id="slide-water-tracker" class="slide-view">
             <div class="section-title">
                 <h2>💧 Daily Hydration Tracker</h2>
                 <p>Maintain hydration for academic alertness and cognitive stamina.</p>
             </div>
             
             <div class="panel-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
-                <div style="font-size: 3rem;">🚰</div>
-                <div class="stat-value" style="font-size: 2.2rem; margin: 0.5rem 0;">
+                <div style="font-size: 3.5rem;">🚰</div>
+                <div class="stat-value" style="font-size: 2.4rem; margin: 0.5rem 0;">
                     <span id="trackerWaterVal">1.25</span> / 2.5 Liters
                 </div>
-                <div class="progress-bar" style="height: 12px; margin: 1.2rem 0;">
+                <div class="progress-bar" style="height: 12px; margin: 1.5rem 0;">
                     <div id="trackerWaterFill" class="progress-fill" style="width: 50%;"></div>
                 </div>
                 <div style="display: flex; justify-content: center; gap: 0.8rem;">
@@ -580,10 +749,10 @@
                     <button class="btn-primary" style="background: #94a3b8;" onclick="resetWater()">Reset</button>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 6. Analytics Section -->
-        <section id="analytics" style="background: white;">
+        <!-- SLIDE 7: ANALYTICS -->
+        <div id="slide-analytics" class="slide-view">
             <div class="section-title">
                 <h2>📈 Nutrition & Health Analytics</h2>
                 <p>Weekly breakdown of macronutrient ratios and dining habits.</p>
@@ -615,10 +784,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 7. Nutrition Guide -->
-        <section id="nutrition">
+        <!-- SLIDE 8: NUTRITION -->
+        <div id="slide-nutrition" class="slide-view">
             <div class="section-title">
                 <h2>Essential Nutrients</h2>
                 <p>The foundations every student needs for focus and stamina.</p>
@@ -629,10 +798,10 @@
                 <div class="card"><div class="card-icon">🥑</div><h3>Healthy Fats</h3><p>Essential for hormone regulation and brain cells.</p></div>
                 <div class="card"><div class="card-icon">🍊</div><h3>Vitamins</h3><p>Immunity boosters to keep illness away before exams.</p></div>
             </div>
-        </section>
+        </div>
 
-        <!-- 8. Healthy Food -->
-        <section id="healthy" style="background: white;">
+        <!-- SLIDE 9: HEALTHY FOOD -->
+        <div id="slide-healthy" class="slide-view">
             <div class="section-title">
                 <h2>Healthy Food Awareness</h2>
                 <p>Everyday choices to optimize your dining hall meals.</p>
@@ -643,10 +812,10 @@
                 <div class="card"><div class="card-icon">🥛</div><h3>Dairy & Probiotics</h3><p>Chaas and curd aid digestion and nutrient uptake.</p></div>
                 <div class="card"><div class="card-icon">🏷️</div><h3>Read Food Labels</h3><p>Spot hidden refined sugars and palm oils in snacks.</p></div>
             </div>
-        </section>
+        </div>
 
-        <!-- 9. Meals -->
-        <section id="meals">
+        <!-- SLIDE 10: MEALS -->
+        <div id="slide-meals" class="slide-view">
             <div class="section-title">
                 <h2>Balanced Meal Combinations</h2>
                 <p>Easy-to-follow meal composition for students.</p>
@@ -656,7 +825,7 @@
                 <div class="card"><div class="card-icon">🍛</div><h3>Lunch</h3><p>1 bowl dal, 2 rotis, greens, and bowl of curd.</p></div>
                 <div class="card"><div class="card-icon">🌙</div><h3>Dinner</h3><p>Light meal: Moong dal khichdi or daliya with vegetables.</p></div>
             </div>
-        </section>
+        </div>
 
         <footer>
             <h2 style="color: white; margin-bottom: 0.3rem;">🥗 nutriAware</h2>
@@ -689,14 +858,11 @@
             { name: "Paneer Bhurji & Roti", category: "breakfast", time: "12m", cal: "260 kcal", ingredients: "Crumbled paneer, tomato, chillies, coriander", prep: "Sauté tomatoes and chillies, add crumbled paneer, cook 3 mins." },
             { name: "Besan Chilla", category: "breakfast", time: "10m", cal: "170 kcal", ingredients: "Gram flour (besan), ajwain, chopped onion", prep: "Mix batter with water. Cook like pancake on non-stick pan." },
             { name: "Boiled Eggs with Pepper", category: "breakfast", time: "10m", cal: "155 kcal", ingredients: "2 whole eggs, black pepper, pinch of salt", prep: "Hard boil eggs for 9 mins. Peel, halve, season with black pepper." },
-            { name: "Peanut Butter Banana Toast", category: "breakfast", time: "3m", cal: "230 kcal", ingredients: "Whole wheat bread, peanut butter, banana", prep: "Toast bread slice, spread peanut butter, top with banana slices." },
             { name: "High-Protein Mess Dal Khichdi", category: "lunch", time: "15m", cal: "310 kcal", ingredients: "Yellow moong dal, rice, cumin, spinach", prep: "Cook equal parts dal and rice with turmeric and cumin." },
             { name: "Soya Chunks Pulao", category: "lunch", time: "15m", cal: "330 kcal", ingredients: "Boiled soya chunks, rice, onion, garam masala", prep: "Sauté boiled soya chunks with onion and cooked rice." },
             { name: "Chickpea Rice Bowl", category: "lunch", time: "10m", cal: "320 kcal", ingredients: "Boiled chana, rice, cucumber, mint curd", prep: "Layer warm rice with seasoned chana and curd." },
-            { name: "Rajma Roti Wrap", category: "lunch", time: "5m", cal: "280 kcal", ingredients: "Thick rajma, 1 roti, onion slices, lemon", prep: "Wrap drained thick rajma in whole wheat roti with onion." },
             { name: "Roasted Makhana", category: "snack", time: "4m", cal: "110 kcal", ingredients: "Foxnuts, 1/2 tsp ghee, turmeric, rock salt", prep: "Dry roast makhana with drop of ghee until crunchy." },
             { name: "Kala Chana Chaat", category: "snack", time: "4m", cal: "150 kcal", ingredients: "Boiled black chickpeas, tomato, onion, lemon", prep: "Mix boiled chana with chopped raw onion, tomato, and lemon." },
-            { name: "Sprouts Bhel", category: "snack", time: "4m", cal: "140 kcal", ingredients: "Sprouted moong, murmura, lemon, green chutney", prep: "Mix murmura and sprouts with lemon and green chili chutney." },
             { name: "Moong Dal Soup", category: "dinner", time: "12m", cal: "160 kcal", ingredients: "Yellow moong dal, ginger, cumin, lemon", prep: "Cook dal thin with ginger, blend lightly, squeeze fresh lemon." },
             { name: "Oats Khichdi", category: "dinner", time: "10m", cal: "210 kcal", ingredients: "Rolled oats, peas, carrots, cumin, turmeric", prep: "Cook veggies in pan, add oats and 1.5 cups water; simmer." },
             { name: "Mint Chaas", category: "drinks", time: "2m", cal: "45 kcal", ingredients: "1/2 cup curd, 1 cup cold water, roasted jeera, mint", prep: "Blend curd and water with mint and roasted cumin." },
@@ -706,6 +872,23 @@
         let isUserLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         let waterTotal = 1.25;
 
+        // Slide Switcher Function
+        function switchSlide(slideId) {
+            document.querySelectorAll('.slide-view').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+
+            const target = document.getElementById(`slide-${slideId}`);
+            if (target) target.classList.add('active');
+
+            const activeBtn = Array.from(document.querySelectorAll('.nav-tab')).find(b => 
+                b.getAttribute('onclick') && b.getAttribute('onclick').includes(slideId)
+            );
+            if (activeBtn) activeBtn.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Recipes Renderer
         function renderRecipes(category = "all") {
             const container = document.getElementById("recipeContainer");
             const list = (category === "all") ? RECIPE_DB : RECIPE_DB.filter(r => r.category === category);
@@ -728,23 +911,78 @@
             renderRecipes(cat);
         }
 
+        // AI Chat Engine
+        function quickAsk(text) {
+            document.getElementById("chatInput").value = text;
+            sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById("chatInput");
+            const q = input.value.trim().toLowerCase();
+            if (!q) return;
+
+            appendChat(input.value, "user");
+            input.value = "";
+
+            setTimeout(() => {
+                const res = searchRecipes(q);
+                appendChat(res, "bot");
+            }, 250);
+        }
+
+        function appendChat(content, type) {
+            const body = document.getElementById("chatBody");
+            const bubble = document.createElement("div");
+            bubble.className = `chat-bubble ${type}`;
+            bubble.innerHTML = content;
+            body.appendChild(bubble);
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function searchRecipes(query) {
+            let matched = [];
+            if (query.includes("breakfast")) matched = RECIPE_DB.filter(r => r.category === "breakfast");
+            else if (query.includes("lunch")) matched = RECIPE_DB.filter(r => r.category === "lunch");
+            else if (query.includes("snack") || query.includes("hostel")) matched = RECIPE_DB.filter(r => r.category === "snack");
+            else if (query.includes("dinner")) matched = RECIPE_DB.filter(r => r.category === "dinner");
+            else if (query.includes("drink")) matched = RECIPE_DB.filter(r => r.category === "drinks");
+            else if (query.includes("protein")) matched = RECIPE_DB.filter(r => r.ingredients.includes("paneer") || r.ingredients.includes("egg") || r.ingredients.includes("soya"));
+            else matched = RECIPE_DB.filter(r => r.name.toLowerCase().includes(query) || r.ingredients.toLowerCase().includes(query));
+
+            if (matched.length === 0) return `I couldn't find a recipe matching "${query}". Try typing <em>poha, oats, paneer, eggs,</em> or <em>breakfast</em>!`;
+
+            const selected = matched.slice(0, 2);
+            let out = `Found <strong>${matched.length}</strong> matching recipe(s):<br>`;
+            selected.forEach(r => {
+                out += `
+                    <div style="border-top:1px dashed #cbd5e1; margin-top:6px; padding-top:5px;">
+                        <strong>🥗 ${r.name}</strong> (${r.time} | ${r.cal})<br>
+                        <small><strong>Ingredients:</strong> ${r.ingredients}</small><br>
+                        <small><strong>Steps:</strong> ${r.prep}</small>
+                    </div>
+                `;
+            });
+            return out;
+        }
+
+        // Scanner Simulation
         function simulateAIScan(e) {
             const res = document.getElementById("scannerResult");
             res.style.display = "block";
             res.scrollIntoView({ behavior: "smooth" });
         }
 
+        // Auth & Sync
         function syncUI() {
             const authBtn = document.getElementById("authBtn");
-            const dashboard = document.getElementById("dashboard");
-            const sidebarDashLink = document.getElementById("sidebarDashLink");
+            const dashNavTab = document.getElementById("dashNavTab");
             const savedEmail = localStorage.getItem("userEmail");
 
             if (isUserLoggedIn) {
                 authBtn.innerHTML = "<span>Logout</span>";
                 authBtn.onclick = logoutUser;
-                dashboard.style.display = "block";
-                sidebarDashLink.style.display = "flex";
+                dashNavTab.style.display = "flex";
 
                 if (savedEmail) {
                     document.getElementById("studentDisplayName").textContent = savedEmail.split("@")[0];
@@ -752,8 +990,7 @@
             } else {
                 authBtn.innerHTML = "<span>Login</span>";
                 authBtn.onclick = toggleAuthModal;
-                dashboard.style.display = "none";
-                sidebarDashLink.style.display = "none";
+                dashNavTab.style.display = "none";
             }
         }
 
@@ -770,7 +1007,7 @@
             localStorage.setItem("userEmail", val);
             toggleAuthModal();
             syncUI();
-            document.getElementById("dashboard").scrollIntoView({ behavior: "smooth" });
+            switchSlide('dashboard');
         }
 
         function logoutUser() {
@@ -778,8 +1015,10 @@
             localStorage.removeItem("isLoggedIn");
             localStorage.removeItem("userEmail");
             syncUI();
+            switchSlide('home');
         }
 
+        // Water
         function addWater() {
             if (waterTotal < 3.5) {
                 waterTotal = parseFloat((waterTotal + 0.25).toFixed(2));
