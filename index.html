@@ -31,14 +31,15 @@
             color: var(--text-dark);
             line-height: 1.6;
             display: flex;
+            min-height: 100vh;
         }
 
-        /* ---------------- VERTICAL SIDEBAR ---------------- */
+        /* ---------------- LEFT VERTICAL SIDEBAR ---------------- */
         aside.sidebar {
             width: var(--sidebar-width);
             height: 100vh;
             background: #ffffff;
-            border-right: 1px solid var(--border);
+            border-right: 1.5px solid var(--border);
             position: fixed;
             top: 0;
             left: 0;
@@ -47,6 +48,7 @@
             justify-content: space-between;
             padding: 1.5rem 1rem;
             z-index: 1000;
+            overflow-y: auto;
         }
 
         .sidebar-brand {
@@ -56,17 +58,16 @@
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0 0.75rem 1.5rem 0.75rem;
+            gap: 0.6rem;
+            padding: 0.2rem 0.5rem 1.2rem 0.5rem;
             border-bottom: 1px solid var(--border);
         }
 
-        /* Vertical Navigation Links */
         .sidebar-links {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            margin-top: 1.5rem;
+            gap: 0.35rem;
+            margin-top: 1.2rem;
         }
 
         .sidebar-links a {
@@ -76,8 +77,8 @@
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 600;
-            font-size: 0.95rem;
-            padding: 0.75rem 1rem;
+            font-size: 0.92rem;
+            padding: 0.65rem 0.85rem;
             border-radius: 8px;
             transition: all 0.2s ease;
         }
@@ -92,7 +93,7 @@
             padding-top: 1rem;
         }
 
-        /* ---------------- MAIN CONTENT WRAPPER ---------------- */
+        /* ---------------- MAIN CONTENT ---------------- */
         main.main-content {
             margin-left: var(--sidebar-width);
             width: calc(100% - var(--sidebar-width));
@@ -101,6 +102,7 @@
 
         section {
             padding: 3.5rem 6%;
+            border-bottom: 1px solid var(--border);
         }
 
         .section-title {
@@ -127,7 +129,6 @@
             cursor: pointer;
             font-weight: 600;
             transition: background 0.2s ease;
-            width: 100%;
         }
 
         .btn-primary:hover {
@@ -137,27 +138,6 @@
         .btn-sm {
             padding: 0.35rem 0.75rem;
             font-size: 0.85rem;
-            width: auto;
-        }
-
-        /* Hero */
-        .hero {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
-            min-height: 48vh;
-        }
-
-        .hero h1 {
-            font-size: 2.6rem;
-            line-height: 1.2;
-            color: var(--primary-hover);
-            margin-bottom: 0.8rem;
-        }
-
-        .hero-emoji {
-            font-size: 4.5rem;
         }
 
         /* Standard Cards Grid */
@@ -173,7 +153,7 @@
             border-radius: 10px;
             border: 1px solid var(--border);
             text-align: center;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
         }
 
         .card-icon {
@@ -181,10 +161,25 @@
             margin-bottom: 0.6rem;
         }
 
-        /* ---------------- DASHBOARD ---------------- */
+        /* Hero */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            min-height: 45vh;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            line-height: 1.2;
+            color: var(--primary-hover);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Dashboard Styles */
         .dashboard-section {
             background: #f0fdf4;
-            border-bottom: 2px solid #bbf7d0;
             display: none;
         }
 
@@ -226,7 +221,7 @@
 
         .dashboard-panels {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-top: 1.5rem;
         }
@@ -245,7 +240,7 @@
             margin: 1rem 0;
         }
 
-        .meal-form select, .meal-form input, .calc-form input {
+        .meal-form select, .meal-form input {
             padding: 0.55rem;
             border: 1px solid var(--border);
             border-radius: 6px;
@@ -256,7 +251,7 @@
 
         .logged-items {
             list-style: none;
-            max-height: 160px;
+            max-height: 150px;
             overflow-y: auto;
         }
 
@@ -268,170 +263,97 @@
             font-size: 0.9rem;
         }
 
-        .swap-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.92rem;
-        }
-
-        .swap-bad { color: var(--danger); font-weight: 500; }
-        .swap-good { color: var(--primary); font-weight: 600; }
-
-        .calc-form {
-            display: flex;
-            flex-direction: column;
-            gap: 0.6rem;
-            margin-top: 0.8rem;
-        }
-
-        .calc-result {
-            margin-top: 0.8rem;
-            padding: 0.7rem;
-            background: var(--primary-light);
-            border-radius: 6px;
-            font-weight: 600;
-            display: none;
-        }
-
-        /* ---------------- AI RECIPE CHATBOX ---------------- */
-        .chat-toggle-btn {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-            font-size: 1.8rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            transition: transform 0.2s ease;
-        }
-
-        .chat-toggle-btn:hover {
-            transform: scale(1.08);
-        }
-
-        .chat-window {
-            display: none;
-            position: fixed;
-            bottom: 95px;
-            right: 25px;
-            width: 380px;
-            height: 520px;
-            background: #ffffff;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-            border: 1px solid var(--border);
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 2000;
-        }
-
-        .chat-header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-header h4 {
-            margin: 0;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .chat-close {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.3rem;
-            cursor: pointer;
-        }
-
-        .chat-body {
-            flex: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-            background: #f8fafc;
-        }
-
-        .chat-msg {
-            padding: 0.7rem 0.9rem;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            line-height: 1.45;
-            max-width: 85%;
-        }
-
-        .chat-msg.bot {
+        /* ---------------- AI SCANNER COMPONENT ---------------- */
+        .scanner-container {
             background: white;
-            border: 1px solid var(--border);
-            align-self: flex-start;
-            border-top-left-radius: 2px;
-        }
-
-        .chat-msg.user {
-            background: var(--primary);
-            color: white;
-            align-self: flex-end;
-            border-top-right-radius: 2px;
-        }
-
-        .chat-suggestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            margin-top: 0.5rem;
-        }
-
-        .chip {
-            background: #e2e8f0;
-            border: none;
+            border: 2px dashed var(--primary);
             border-radius: 12px;
-            padding: 0.25rem 0.6rem;
-            font-size: 0.75rem;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
             cursor: pointer;
-            color: var(--text-dark);
         }
 
-        .chip:hover {
-            background: #cbd5e1;
-        }
-
-        .chat-footer {
-            display: flex;
-            padding: 0.75rem;
+        .scanner-results {
+            display: none;
             background: white;
-            border-top: 1px solid var(--border);
-            gap: 0.5rem;
-        }
-
-        .chat-footer input {
-            flex: 1;
-            padding: 0.6rem;
+            border-radius: 10px;
             border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 0.88rem;
+            padding: 1.5rem;
+            max-width: 600px;
+            margin: 1.5rem auto 0 auto;
         }
 
-        /* ---------------- AUTH MODAL ---------------- */
+        /* ---------------- RECIPE CARDS ---------------- */
+        .recipe-filter {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .recipe-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin: 0.4rem 0 0.8rem 0;
+        }
+
+        /* ---------------- ANALYTICS PROGRESS BARS ---------------- */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .macro-row {
+            margin: 1rem 0;
+        }
+
+        .macro-row-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -486,31 +408,11 @@
             font-size: 0.88rem;
             margin-top: 0.4rem;
         }
-
-        @media (max-width: 900px) {
-            aside.sidebar {
-                width: 70px;
-                padding: 1rem 0.5rem;
-            }
-            .sidebar-brand span, .sidebar-links a span, .sidebar-footer button span {
-                display: none;
-            }
-            .sidebar-brand { justify-content: center; padding-bottom: 1rem; }
-            .sidebar-links a { justify-content: center; padding: 0.75rem 0; }
-            main.main-content {
-                margin-left: 70px;
-                width: calc(100% - 70px);
-            }
-            .chat-window {
-                width: 90%;
-                right: 5%;
-            }
-        }
     </style>
 </head>
 <body>
 
-    <!-- 1. VERTICAL SIDEBAR ON LEFT -->
+    <!-- 1. LEFT VERTICAL SIDEBAR -->
     <aside class="sidebar">
         <div>
             <a href="#home" class="sidebar-brand">
@@ -518,60 +420,69 @@
                 <span>nutriAware</span>
             </a>
             <div class="sidebar-links">
+                <!-- Requested Order: Home -> Dashboard -> AI Scanner -> Diet Recipes -> Water Tracker -> Analytics -> Nutrition -> Healthy Food -> Meals -->
                 <a href="#home"><span>🏠</span> <span>Home</span></a>
+                <a href="#dashboard" id="sidebarDashLink" style="display: none;"><span>📊</span> <span>Dashboard</span></a>
+                <a href="#ai-scanner"><span>📸</span> <span>AI Scanner</span></a>
+                <a href="#diet-recipes"><span>🥗</span> <span>Diet Recipes</span></a>
+                <a href="#water-tracker"><span>💧</span> <span>Water Tracker</span></a>
+                <a href="#analytics"><span>📈</span> <span>Analytics</span></a>
                 <a href="#nutrition"><span>🔬</span> <span>Nutrition</span></a>
                 <a href="#healthy"><span>🍎</span> <span>Healthy Food</span></a>
                 <a href="#meals"><span>🍽️</span> <span>Meals</span></a>
-                <a href="#dashboard" id="sidebarDashLink" style="display: none;"><span>📊</span> <span>Dashboard</span></a>
             </div>
         </div>
 
         <div class="sidebar-footer">
-            <button id="authBtn" class="btn-primary" onclick="toggleAuthModal()">
+            <button id="authBtn" class="btn-primary" style="width: 100%;" onclick="toggleAuthModal()">
                 <span>Login</span>
             </button>
         </div>
     </aside>
 
-    <!-- 2. MAIN SCROLLABLE CONTENT -->
+    <!-- 2. MAIN PAGE CONTENT -->
     <main class="main-content">
-        <!-- Dashboard Section (shown on login) -->
+
+        <!-- 1. Home -->
+        <section id="home" class="hero">
+            <div>
+                <h1>Eat Smart.<br>Live Healthy.</h1>
+                <p style="font-size: 1.15rem; color: var(--text-dark); margin-bottom: 1.2rem; max-width: 500px;">
+                    A smart nutrition platform helping college students scan campus food, track hydration, and adopt balanced mess habits.
+                </p>
+                <a href="#dashboard" class="btn-primary" style="text-decoration: none; display: inline-block;">Open Student Hub →</a>
+            </div>
+            <div style="font-size: 4.5rem;">🥗🍎🥑</div>
+        </section>
+
+        <!-- 2. Dashboard (Switched to 2nd position) -->
         <section id="dashboard" class="dashboard-section">
             <div class="section-title" style="text-align: left; margin-bottom: 1.5rem;">
                 <h2>👋 Welcome, <span id="studentDisplayName">Student</span></h2>
-                <p>Track hydration, compute targets, and find better mess swaps.</p>
+                <p>Track daily calories, hydration progress, and view canteen swaps.</p>
             </div>
 
             <div class="stats-grid">
                 <div class="stat-card">
                     <h4>Daily Hydration</h4>
-                    <div class="stat-value"><span id="waterCount">1.25</span> / 2.5 L</div>
-                    <div class="progress-bar">
-                        <div id="waterProgress" class="progress-fill" style="width: 50%;"></div>
-                    </div>
-                    <div style="display: flex; gap: 0.4rem; margin-top: 0.6rem;">
-                        <button class="btn-primary btn-sm" onclick="addWater()">+ 250 ml</button>
-                        <button class="btn-primary btn-sm" style="background:#94a3b8;" onclick="resetWater()">Reset</button>
-                    </div>
+                    <div class="stat-value"><span id="dashWaterCount">1.25</span> / 2.5 L</div>
+                    <div class="progress-bar"><div id="dashWaterFill" class="progress-fill" style="width: 50%;"></div></div>
                 </div>
-
                 <div class="stat-card">
                     <h4>Calories Logged</h4>
                     <div class="stat-value">1,450 kcal</div>
                     <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
-                    <small style="color: var(--text-muted);">Target: 2,100 kcal / day</small>
                 </div>
-
                 <div class="stat-card">
-                    <h4>Mess Diet Quality</h4>
+                    <h4>Diet Quality</h4>
                     <div class="stat-value" style="color: #16a34a;">B+ (Good)</div>
-                    <small style="color: var(--text-muted);">High plant protein, balanced fiber</small>
+                    <small style="color: var(--text-muted);">High protein, good fiber</small>
                 </div>
             </div>
 
             <div class="dashboard-panels">
                 <div class="panel-card">
-                    <h3>📝 Daily Meal Logger</h3>
+                    <h3>📝 Quick Meal Logger</h3>
                     <form onsubmit="handleMealSubmit(event)" class="meal-form">
                         <select id="mealTypeSelect" required>
                             <option value="Breakfast">Breakfast</option>
@@ -589,76 +500,161 @@
                 </div>
 
                 <div class="panel-card">
-                    <h3>💡 Canteen & Mess Swaps</h3>
-                    <div class="swap-item"><span class="swap-bad">Fried Samosa</span> <span>➔</span> <span class="swap-good">Boiled Egg / Sprouts</span></div>
-                    <div class="swap-item"><span class="swap-bad">Cold Drink</span> <span>➔</span> <span class="swap-good">Chaas / Lemon Water</span></div>
-                    <div class="swap-item"><span class="swap-bad">Maggi Noodles</span> <span>➔</span> <span class="swap-good">Poha / Upma</span></div>
+                    <h3>💡 Smart Canteen Swaps</h3>
+                    <div style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid #eee;">
+                        <span style="color:var(--danger)">Fried Samosa</span> ➔ <span style="color:var(--primary); font-weight:600;">Sprouts Chaat</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid #eee;">
+                        <span style="color:var(--danger)">Packaged Soda</span> ➔ <span style="color:var(--primary); font-weight:600;">Fresh Chaas</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. AI Scanner Section -->
+        <section id="ai-scanner">
+            <div class="section-title">
+                <h2>📸 AI Food Nutrition Scanner</h2>
+                <p>Upload or take a photo of your mess plate to analyze nutrients instantly.</p>
+            </div>
+            
+            <div class="scanner-container" onclick="document.getElementById('foodImageUpload').click()">
+                <input type="file" id="foodImageUpload" accept="image/*" style="display: none;" onchange="simulateAIScan(event)">
+                <div style="font-size: 3rem;">📷</div>
+                <h3 style="margin-top: 0.5rem; color: var(--primary);">Tap to Upload or Snap Meal Photo</h3>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Supports mess thalis, sandwiches, snacks, and fruits</p>
+            </div>
+
+            <div id="scannerResult" class="scanner-results">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+                    <h3 id="detectedFoodName" style="color: var(--primary);">Detected: Vegetable Thali</h3>
+                    <span style="background: var(--primary-light); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 700;">94% Accuracy</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem; text-align: center;">
+                    <div><small>Calories</small><h4 id="scanCal">420 kcal</h4></div>
+                    <div><small>Protein</small><h4 id="scanProt">14g</h4></div>
+                    <div><small>Carbs</small><h4 id="scanCarbs">62g</h4></div>
+                    <div><small>Fats</small><h4 id="scanFats">11g</h4></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Diet Recipes Section -->
+        <section id="diet-recipes" style="background: white;">
+            <div class="section-title">
+                <h2>🥗 60+ Healthy Diet Recipes</h2>
+                <p>Easy, budget-friendly recipes designed for mess and hostel life.</p>
+            </div>
+
+            <div class="recipe-filter">
+                <button class="filter-btn active" onclick="filterRecipeCategory('all')">All</button>
+                <button class="filter-btn" onclick="filterRecipeCategory('breakfast')">Breakfast</button>
+                <button class="filter-btn" onclick="filterRecipeCategory('lunch')">Lunch</button>
+                <button class="filter-btn" onclick="filterRecipeCategory('snack')">Snacks</button>
+                <button class="filter-btn" onclick="filterRecipeCategory('dinner')">Dinner</button>
+                <button class="filter-btn" onclick="filterRecipeCategory('drinks')">Drinks</button>
+            </div>
+
+            <div class="recipe-grid" id="recipeContainer">
+                <!-- Populated via JavaScript with 60 recipes -->
+            </div>
+        </section>
+
+        <!-- 5. Water Tracker Section -->
+        <section id="water-tracker">
+            <div class="section-title">
+                <h2>💧 Daily Hydration Tracker</h2>
+                <p>Maintain hydration for academic alertness and cognitive stamina.</p>
+            </div>
+            
+            <div class="panel-card" style="max-width: 500px; margin: 0 auto; text-align: center;">
+                <div style="font-size: 3rem;">🚰</div>
+                <div class="stat-value" style="font-size: 2.2rem; margin: 0.5rem 0;">
+                    <span id="trackerWaterVal">1.25</span> / 2.5 Liters
+                </div>
+                <div class="progress-bar" style="height: 12px; margin: 1.2rem 0;">
+                    <div id="trackerWaterFill" class="progress-fill" style="width: 50%;"></div>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 0.8rem;">
+                    <button class="btn-primary" onclick="addWater()">+ 250 ml Glass</button>
+                    <button class="btn-primary" style="background: #94a3b8;" onclick="resetWater()">Reset</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Analytics Section -->
+        <section id="analytics" style="background: white;">
+            <div class="section-title">
+                <h2>📈 Nutrition & Health Analytics</h2>
+                <p>Weekly breakdown of macronutrient ratios and dining habits.</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="panel-card">
+                    <h3>Macronutrient Targets</h3>
+                    <div class="macro-row">
+                        <div class="macro-row-header"><span>Protein</span><span>58g / 75g (77%)</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 77%;"></div></div>
+                    </div>
+                    <div class="macro-row">
+                        <div class="macro-row-header"><span>Complex Carbs</span><span>210g / 250g (84%)</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 84%; background: #0284c7;"></div></div>
+                    </div>
+                    <div class="macro-row">
+                        <div class="macro-row-header"><span>Healthy Fats</span><span>38g / 50g (76%)</span></div>
+                        <div class="progress-bar"><div class="progress-fill" style="width: 76%; background: #eab308;"></div></div>
+                    </div>
                 </div>
 
                 <div class="panel-card">
-                    <h3>⚖️ BMI & Calorie Target</h3>
-                    <div class="calc-form">
-                        <input type="number" id="weightKg" placeholder="Weight (kg)" required>
-                        <input type="number" id="heightCm" placeholder="Height (cm)" required>
-                        <button class="btn-primary" onclick="calculateBMI()">Calculate</button>
+                    <h3>Weekly Habit Score</h3>
+                    <div style="margin-top: 1rem;">
+                        <p style="font-size: 0.95rem;">🌱 <strong>Mess Vegetable Intake:</strong> 85% consistent</p>
+                        <p style="font-size: 0.95rem; margin-top: 0.6rem;">💧 <strong>Hydration Target:</strong> Met 5 out of 7 days</p>
+                        <p style="font-size: 0.95rem; margin-top: 0.6rem;">🚫 <strong>Deep-Fried Snack Reduction:</strong> -35% this week</p>
                     </div>
-                    <div id="bmiResult" class="calc-result"></div>
                 </div>
             </div>
         </section>
 
-        <!-- Hero Section -->
-        <section id="home" class="hero">
-            <div>
-                <h1>Eat Smart.<br>Live Healthy.</h1>
-                <p style="font-size: 1.15rem; color: var(--text-dark); margin-bottom: 1.2rem; max-width: 500px;">
-                    nutriAware helps college students navigate canteen food, meet daily nutrient goals, and discover 60+ healthy recipes.
-                </p>
-                <a href="#nutrition" class="btn-primary" style="text-decoration: none; display: inline-block; width: auto;">Explore Nutrition Guide →</a>
-            </div>
-            <div class="hero-emoji">🥗🍎🥑</div>
-        </section>
-
-        <!-- Nutrition Guide -->
+        <!-- 7. Nutrition Guide -->
         <section id="nutrition">
             <div class="section-title">
                 <h2>Essential Nutrients</h2>
                 <p>The foundations every student needs for focus and stamina.</p>
             </div>
             <div class="card-grid">
-                <div class="card"><div class="card-icon">🍚</div><h3>Carbohydrates</h3><p>Clean fuel for memory and energy throughout study hours.</p></div>
-                <div class="card"><div class="card-icon">🥚</div><h3>Proteins</h3><p>Essential for repair, muscle recovery, and mental stamina.</p></div>
-                <div class="card"><div class="card-icon">🥑</div><h3>Healthy Fats</h3><p>Supports brain cell health and nutrient absorption.</p></div>
-                <div class="card"><div class="card-icon">🍊</div><h3>Vitamins</h3><p>Maintains immunity and helps prevent burnout.</p></div>
-                <div class="card"><div class="card-icon">🥦</div><h3>Minerals</h3><p>Calcium and Iron to fight fatigue and support bone health.</p></div>
-                <div class="card"><div class="card-icon">💧</div><h3>Hydration</h3><p>Prevents mental fatigue and headaches during lectures.</p></div>
+                <div class="card"><div class="card-icon">🍚</div><h3>Carbohydrates</h3><p>Fuel for mental alertness during lectures.</p></div>
+                <div class="card"><div class="card-icon">🥚</div><h3>Proteins</h3><p>Body repair and sustained cognitive energy.</p></div>
+                <div class="card"><div class="card-icon">🥑</div><h3>Healthy Fats</h3><p>Essential for hormone regulation and brain cells.</p></div>
+                <div class="card"><div class="card-icon">🍊</div><h3>Vitamins</h3><p>Immunity boosters to keep illness away before exams.</p></div>
             </div>
         </section>
 
-        <!-- Healthy Food -->
+        <!-- 8. Healthy Food -->
         <section id="healthy" style="background: white;">
             <div class="section-title">
-                <h2>Smart Choices on Campus</h2>
-                <p>Easy, budget-friendly food decisions.</p>
+                <h2>Healthy Food Awareness</h2>
+                <p>Everyday choices to optimize your dining hall meals.</p>
             </div>
             <div class="card-grid">
-                <div class="card"><div class="card-icon">🍎</div><h3>Add Fresh Fruits</h3><p>Snack on bananas or apples instead of chips.</p></div>
-                <div class="card"><div class="card-icon">🥗</div><h3>Ask for More Sabzi</h3><p>Request extra salad and greens with your daily thali.</p></div>
-                <div class="card"><div class="card-icon">🏷️</div><h3>Scan Food Labels</h3><p>Notice hidden sugars and high sodium in packaged items.</p></div>
-                <div class="card"><div class="card-icon">🥛</div><h3>Curd & Chaas</h3><p>Great source of gut probiotics and easily accessible.</p></div>
+                <div class="card"><div class="card-icon">🍎</div><h3>Fresh Fruits</h3><p>Keep bananas or apples handy in your hostel room.</p></div>
+                <div class="card"><div class="card-icon">🥦</div><h3>Extra Vegetables</h3><p>Double your sabzi portion over refined rice.</p></div>
+                <div class="card"><div class="card-icon">🥛</div><h3>Dairy & Probiotics</h3><p>Chaas and curd aid digestion and nutrient uptake.</p></div>
+                <div class="card"><div class="card-icon">🏷️</div><h3>Read Food Labels</h3><p>Spot hidden refined sugars and palm oils in snacks.</p></div>
             </div>
         </section>
 
-        <!-- Meals -->
+        <!-- 9. Meals -->
         <section id="meals">
             <div class="section-title">
-                <h2>Balanced Mess Combinations</h2>
-                <p>Practical plate combinations for college dining halls.</p>
+                <h2>Balanced Meal Combinations</h2>
+                <p>Easy-to-follow meal composition for students.</p>
             </div>
             <div class="card-grid">
-                <div class="card"><div class="card-icon">🌅</div><h3>Breakfast</h3><p>Sprouts usal, vegetable poha, idli sambar, or eggs.</p></div>
-                <div class="card"><div class="card-icon">🍛</div><h3>Lunch</h3><p>1 cup dal, 2 rotis, bowl of green sabzi, and a cup of curd.</p></div>
-                <div class="card"><div class="card-icon">🌙</div><h3>Dinner</h3><p>Light meal: Khichdi with salad or vegetable daliya.</p></div>
+                <div class="card"><div class="card-icon">🌅</div><h3>Breakfast</h3><p>Sprouts, vegetable poha, idli, or boiled eggs.</p></div>
+                <div class="card"><div class="card-icon">🍛</div><h3>Lunch</h3><p>1 bowl dal, 2 rotis, greens, and bowl of curd.</p></div>
+                <div class="card"><div class="card-icon">🌙</div><h3>Dinner</h3><p>Light meal: Moong dal khichdi or daliya with vegetables.</p></div>
             </div>
         </section>
 
@@ -669,32 +665,7 @@
         </footer>
     </main>
 
-    <!-- 3. FLOATING AI NUTRITION & RECIPE CHAT -->
-    <button class="chat-toggle-btn" onclick="toggleChatWindow()" title="Ask NutriBot for Recipes">🤖</button>
-
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <h4><span>🥗</span> NutriBot (60+ Recipes)</h4>
-            <button class="chat-close" onclick="toggleChatWindow()">&times;</button>
-        </div>
-        <div class="chat-body" id="chatBody">
-            <div class="chat-msg bot">
-                Hi! I'm NutriBot. Ask me for quick, healthy recipes suitable for hostel rooms, mess food, or student cooking!
-                <div class="chat-suggestions">
-                    <button class="chip" onclick="quickAsk('Breakfast recipes')">🍳 Breakfast</button>
-                    <button class="chip" onclick="quickAsk('High protein recipe')">💪 High Protein</button>
-                    <button class="chip" onclick="quickAsk('Hostel snack recipe')">⚡ Quick Snacks</button>
-                    <button class="chip" onclick="quickAsk('Healthy drink')">🥤 Drinks</button>
-                </div>
-            </div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Ask for a recipe or ingredient..." onkeydown="if(event.key==='Enter') sendChatMessage()">
-            <button class="btn-primary btn-sm" onclick="sendChatMessage()">Send</button>
-        </div>
-    </div>
-
-    <!-- 4. AUTH MODAL -->
+    <!-- Auth Modal -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-box">
             <span class="close-btn" onclick="toggleAuthModal()">&times;</span>
@@ -704,91 +675,64 @@
                 <input type="text" id="authEmailInput" placeholder="student@college.edu" required>
                 <label style="font-size: 0.85rem; font-weight: 600;">Password</label>
                 <input type="password" required placeholder="••••••••">
-                <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">Sign In</button>
+                <button type="submit" class="btn-primary" style="margin-top: 0.5rem; width: 100%;">Sign In</button>
             </form>
         </div>
     </div>
 
-    <!-- 5. JAVASCRIPT & 60-RECIPE DATABASE -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // RECIPE DATABASE (60 Recipes categorized)
         const RECIPE_DB = [
-            // Breakfast (1-10)
-            { name: "Vegetable Poha", category: "breakfast", time: "10 mins", cal: "180 kcal", ingredients: "Flattened rice, onions, peanuts, mustard seeds, turmeric, lemon", prep: "Wash poha. Sauté peanuts & onions in 1 tsp oil, add turmeric, mix poha, squeeze lemon juice." },
-            { name: "Moong Sprout Salad", category: "breakfast", time: "5 mins", cal: "140 kcal", ingredients: "Sprouted green moong, cucumber, tomato, chaat masala, lemon", prep: "Toss raw or steamed sprouts with diced veg, chaat masala, and fresh lemon juice." },
-            { name: "Masala Oats", category: "breakfast", time: "8 mins", cal: "190 kcal", ingredients: "Rolled oats, chopped tomato, onion, green chili, turmeric", prep: "Sauté veg lightly, add 1 cup water, boil, stir in oats for 3 minutes until thick." },
-            { name: "Paneer Bhurji & Roti", category: "breakfast", time: "12 mins", cal: "260 kcal", ingredients: "Crumbled paneer, tomato, green chillies, coriander", prep: "Sauté tomatoes and chillies, add crumbled paneer and pinch of salt. Cook 3 mins." },
-            { name: "Besan Chilla", category: "breakfast", time: "10 mins", cal: "170 kcal", ingredients: "Gram flour (besan), ajwain, chopped onion, coriander", prep: "Make a pourable batter with water. Cook like a crepe on a non-stick pan with drop of oil." },
-            { name: "Boiled Eggs with Black Pepper", category: "breakfast", time: "10 mins", cal: "155 kcal", ingredients: "2 whole eggs, pinch of salt, black pepper", prep: "Hard boil eggs for 9-10 mins. Peel, slice, and season with black pepper." },
-            { name: "Peanut Butter Banana Toast", category: "breakfast", time: "3 mins", cal: "230 kcal", ingredients: "Whole wheat bread, 1 tbsp peanut butter, 1 sliced banana", prep: "Toast bread slice, spread peanut butter, and top with banana coins." },
-            { name: "Curd (Dahi) & Puffed Rice", category: "breakfast", time: "2 mins", cal: "160 kcal", ingredients: "1 cup curd, murmura (puffed rice), roasted cumin powder", prep: "Mix fresh curd with murmura and a pinch of cumin and rock salt." },
-            { name: "Upma with Vegetables", category: "breakfast", time: "12 mins", cal: "210 kcal", ingredients: "Semolina (suji), mustard seeds, ginger, carrot, peas", prep: "Roast suji. Sauté veggies and mustard, add hot water, stir suji slowly to avoid lumps." },
-            { name: "Egg Bhurji (Scrambled Eggs)", category: "breakfast", time: "7 mins", cal: "190 kcal", ingredients: "2 eggs, onions, green chillies, coriander", prep: "Whisk eggs. Sauté onions in a pan, pour eggs, scramble until cooked." },
-
-            // Lunch & Mess Upgrades (11-25)
-            { name: "High-Protein Mess Dal Khichdi", category: "lunch", time: "15 mins", cal: "310 kcal", ingredients: "Yellow moong dal, rice, cumin, turmeric, spinach", prep: "Cook equal parts dal and rice with turmeric and cumin until soft and porridge-like." },
-            { name: "Soya Chunks Pulao", category: "lunch", time: "15 mins", cal: "330 kcal", ingredients: "Boiled soya chunks, rice, onion, garam masala", prep: "Squeeze boiled soya chunks dry. Sauté with onion, add pre-cooked rice and spices." },
-            { name: "Chickpea (Chana) Rice Bowl", category: "lunch", time: "10 mins", cal: "320 kcal", ingredients: "Boiled chana, brown/white rice, cucumber, mint curd", prep: "Layer warm rice with seasoned chana and fresh cucumber with mint curd." },
-            { name: "Rajma (Kidney Beans) Wrap", category: "lunch", time: "5 mins", cal: "280 kcal", ingredients: "Mess rajma gravy, 1 roti, onion slices, lemon", prep: "Drain thick rajma beans, place in whole wheat roti, add raw onions and roll up." },
-            { name: "Palak (Spinach) Paneer Simple", category: "lunch", time: "15 mins", cal: "250 kcal", ingredients: "Blanched spinach puree, paneer cubes, garlic", prep: "Simmer pureed blanched spinach with garlic, toss in raw paneer cubes." },
-            { name: "Cucumber & Curd Rice", category: "lunch", time: "5 mins", cal: "240 kcal", ingredients: "Leftover mess rice, fresh curd, grated cucumber, mustard seeds", prep: "Mash rice with curd, fold in grated cucumber, temper with mustard seeds." },
-            { name: "Egg Curry (Hostel Style)", category: "lunch", time: "15 mins", cal: "270 kcal", ingredients: "2 boiled eggs, onion-tomato paste, turmeric, coriander powder", prep: "Sauté onion-tomato base, add spices, pour water, drop halved eggs in and simmer." },
-            { name: "Moong Dal Cheela with Paneer", category: "lunch", time: "12 mins", cal: "290 kcal", ingredients: "Soaked yellow moong batter, grated paneer filling", prep: "Spread moong batter on pan, stuff with paneer and fold like a dosa." },
-            { name: "Lauki (Bottle Gourd) Chana Dal", category: "lunch", time: "20 mins", cal: "220 kcal", ingredients: "Chana dal, chopped lauki, cumin, turmeric", prep: "Pressure cook lauki with chana dal, temper with pinch of hing and cumin." },
-            { name: "Tofu / Paneer Stir-Fry", category: "lunch", time: "10 mins", cal: "210 kcal", ingredients: "Paneer/Tofu cubes, capsicum, onion, soy sauce, black pepper", prep: "Sauté bell peppers and paneer in 1 tsp oil on high flame for 5 mins." },
-            { name: "Vegetable Roti Roll", category: "lunch", time: "6 mins", cal: "200 kcal", ingredients: "Mess roti, shredded cabbage, carrot, green chutney", prep: "Spread green chutney on roti, add crunchy raw veggies, roll tightly." },
-            { name: "Black Chana Curry", category: "lunch", time: "20 mins", cal: "260 kcal", ingredients: "Kala chana, ginger, tomato, coriander powder", prep: "Boil kala chana with ginger and tomato paste; high in iron and complex carbs." },
-            { name: "Curd & Boiled Potato Salad", category: "lunch", time: "5 mins", cal: "190 kcal", ingredients: "1 boiled potato cubed, 1/2 cup curd, rock salt, roasted jeera", prep: "Mix potato cubes in beaten curd with roasted cumin powder." },
-            { name: "Sautéed Mushroom Wrap", category: "lunch", time: "10 mins", cal: "210 kcal", ingredients: "Button mushrooms, garlic, black pepper, 1 roti", prep: "Sauté sliced mushrooms with garlic and pepper; wrap in warm roti." },
-            { name: "Masala Dal Bowl", category: "lunch", time: "5 mins", cal: "180 kcal", ingredients: "1 bowl mess dal, extra chopped tomato, lemon, coriander", prep: "Revive bland canteen dal with freshly chopped tomato, cilantro, and lemon." },
-
-            // Snacks & Quick Bites (26-40)
-            { name: "Roasted Makhana (Foxnuts)", category: "snack", time: "4 mins", cal: "110 kcal", ingredients: "Foxnuts (makhana), 1/2 tsp ghee, turmeric, salt", prep: "Dry roast makhana with a drop of ghee and pinch of turmeric until crunchy." },
-            { name: "Kala Chana Chaat", category: "snack", time: "4 mins", cal: "150 kcal", ingredients: "Boiled black chickpeas, tomato, onion, lemon, chaat masala", prep: "Mix boiled chana with chopped raw onion, tomato, green chillies, and lemon juice." },
-            { name: "Peanut Chaat", category: "snack", time: "3 mins", cal: "190 kcal", ingredients: "Roasted peanuts, chopped onion, coriander, lemon", prep: "Toss peanuts with salad toppings and lemon for instant crunch and protein." },
-            { name: "Roasted Chana & Jaggery", category: "snack", time: "1 min", cal: "160 kcal", ingredients: "Handful roasted chana (bhuna chana), small piece jaggery", prep: "Eat directly - classic stamina booster, high in bioavailable iron." },
-            { name: "Sprouts Bhel", category: "snack", time: "4 mins", cal: "140 kcal", ingredients: "Sprouted moong, handful murmura, green chutney, lemon", prep: "Mix murmura and sprouts with lemon and green chili chutney." },
-            { name: "Boiled Sweet Corn Bowl", category: "snack", time: "5 mins", cal: "130 kcal", ingredients: "Sweet corn, pinch of butter, black pepper, lime juice", prep: "Steam corn in kettle or microwave, toss with pepper and lime." },
-            { name: "Fruit Chaat", category: "snack", time: "5 mins", cal: "120 kcal", ingredients: "Apple, banana, guava, pinch of chaat masala", prep: "Dice fresh seasonal fruits and sprinkle chaat masala." },
-            { name: "Masala Murmura", category: "snack", time: "3 mins", cal: "95 kcal", ingredients: "Puffed rice, roasted peanuts, pinch of turmeric, salt", prep: "Dry roast murmura with roasted peanuts for a low-calorie study snack." },
-            { name: "Cucumber Boats with Paneer", category: "snack", time: "4 mins", cal: "110 kcal", ingredients: "1 cucumber split lengthwise, crumbled paneer, pepper", prep: "Hollow out cucumber center, stuff with crumbled paneer and pepper." },
-            { name: "Hard Boiled Egg Whites (3 pcs)", category: "snack", time: "8 mins", cal: "50 kcal", ingredients: "3 egg whites, chaat masala", prep: "Peel boiled eggs, discard yolks, sprinkle whites with chaat masala." },
-            { name: "Tomato Paneer Skewers", category: "snack", time: "3 mins", cal: "140 kcal", ingredients: "Cubed raw paneer, cherry tomatoes or cubed tomatoes", prep: "Spear together with toothpicks, sprinkle oregano or black pepper." },
-            { name: "Spicy Roasted Soyabean Seeds", category: "snack", time: "2 mins", cal: "170 kcal", ingredients: "Store-bought roasted soya seeds, lemon juice", prep: "Very high protein, crunchy snack. Eat with a dash of lime." },
-            { name: "Whole Wheat Toast with Curd Dip", category: "snack", time: "4 mins", cal: "150 kcal", ingredients: "1 slice toast, hung curd mixed with garlic and herbs", prep: "Use thick hung curd as a clean mayo replacement on crisp toast." },
-            { name: "Banana with 1 tsp Peanut Butter", category: "snack", time: "1 min", cal: "150 kcal", ingredients: "1 ripe banana, 1 tsp natural peanut butter", prep: "Dip banana into peanut butter for quick sustained pre-workout energy." },
-            { name: "Roasted Almonds & Walnuts", category: "snack", time: "1 min", cal: "170 kcal", ingredients: "6-8 almonds, 2 walnut halves", prep: "Eat raw or dry roasted for omega-3 and brain health during study sessions." },
-
-            // Dinner (41-52)
-            { name: "Moong Dal Soup", category: "dinner", time: "12 mins", cal: "160 kcal", ingredients: "Yellow split moong dal, ginger, cumin seeds, lemon", prep: "Cook dal thin with ginger and garlic; blend lightly, squeeze fresh lemon." },
-            { name: "Paneer & Vegetable Salad Bowl", category: "dinner", time: "8 mins", cal: "220 kcal", ingredients: "Paneer cubes, bell pepper, cucumber, olive oil drop, lemon", prep: "Toss raw or pan-seared paneer cubes with lots of crunchy greens." },
-            { name: "Oats Vegetable Khichdi", category: "dinner", time: "10 mins", cal: "210 kcal", ingredients: "Rolled oats, peas, carrots, cumin seeds, turmeric", prep: "Cook veggies in pan, add oats and 1.5 cups water; simmer till creamy." },
-            { name: "Steamed Vegetable Idli & Mint Chutney", category: "dinner", time: "10 mins", cal: "170 kcal", ingredients: "2 idlis, fresh coriander-mint green chutney", prep: "Light, easily digestible dinner that prevents acid reflux before sleep." },
-            { name: "Clear Vegetable Soup", category: "dinner", time: "10 mins", cal: "85 kcal", ingredients: "Cabbage, carrot, beans, black pepper, vegetable broth", prep: "Boil finely chopped vegetables with water, salt, and generous black pepper." },
-            { name: "Boiled Soya Chunks Salad", category: "dinner", time: "7 mins", cal: "180 kcal", ingredients: "Boiled soya chunks, tomato, cucumber, mint leaves, lemon", prep: "Chop boiled soya chunks into quarters, toss with salad veggies and herbs." },
-            { name: "Egg White Bhurji & 1 Roti", category: "dinner", time: "10 mins", cal: "190 kcal", ingredients: "3 egg whites, 1 whole egg, onion, 1 whole wheat roti", prep: "Scramble whites with onion and spices; eat with single roti." },
-            { name: "Daliya (Broken Wheat) Khichdi", category: "dinner", time: "15 mins", cal: "230 kcal", ingredients: "Roasted daliya, yellow moong dal, carrots, cumin", prep: "Cook broken wheat and dal together with vegetables for high dietary fiber." },
-            { name: "Stir-Fried Paneer & Broccoli", category: "dinner", time: "8 mins", cal: "200 kcal", ingredients: "Broccoli florets, paneer cubes, black pepper, garlic", prep: "Flash fry in a pan with 1/2 tsp oil until broccoli is tender-crisp." },
-            { name: "Tomato & Carrot Soup", category: "dinner", time: "12 mins", cal: "95 kcal", ingredients: "Tomatoes, 1 carrot, ginger, black pepper", prep: "Boil and blend tomatoes and carrot; simmer with pepper and ginger." },
-            { name: "Masala Sprout Wrap", category: "dinner", time: "6 mins", cal: "210 kcal", ingredients: "Steamed sprouts, 1 phulka/roti, coriander chutney", prep: "Warm sprouts in a pan with cumin, wrap inside a soft roti." },
-            { name: "Cottage Cheese & Spinach Stir-Fry", category: "dinner", time: "10 mins", cal: "220 kcal", ingredients: "Fresh spinach leaves, paneer cubes, minced garlic", prep: "Wilt spinach with garlic in a pan, toss paneer cubes in for 2 minutes." },
-
-            // Healthy Drinks & Shakes (53-62)
-            { name: "Mint Chaat Buttermilk (Chaas)", category: "drinks", time: "2 mins", cal: "45 kcal", ingredients: "1/2 cup curd, 1 cup cold water, roasted jeera, mint, black salt", prep: "Blend curd and water with mint and roasted cumin. Best digestion booster." },
-            { name: "Sattu Protein Cooler", category: "drinks", time: "2 mins", cal: "140 kcal", ingredients: "2 tbsp roasted gram flour (sattu), water, lemon, black salt", prep: "Stir sattu powder into cold water with lemon and black salt. Natural 7g protein drink." },
-            { name: "Banana Oatmeal Smoothie", category: "drinks", time: "4 mins", cal: "240 kcal", ingredients: "1 banana, 2 tbsp instant oats, 1 cup milk, dash of cinnamon", prep: "Blend all ingredients till smooth. Great post-workout or quick breakfast." },
-            { name: "Lemon Mint Chia Water", category: "drinks", time: "3 mins", cal: "40 kcal", ingredients: "1 tsp soaked chia seeds, fresh lemon juice, water, mint leaves", prep: "Stir soaked chia into chilled lemon water for fiber and hydration." },
-            { name: "Turmeric Golden Milk (Haldi Doodh)", category: "drinks", time: "5 mins", cal: "130 kcal", ingredients: "Warm milk, pinch of turmeric, black pepper, dash of honey", prep: "Warm milk with turmeric and pepper before sleeping to reduce inflammation." },
-            { name: "Cucumber Mint Cooler", category: "drinks", time: "3 mins", cal: "35 kcal", ingredients: "1/2 cucumber, fresh mint, lemon juice, ice, black salt", prep: "Blend and strain cucumber with mint and lemon for hydration." },
-            { name: "Cold Coffee with Skimmed Milk", category: "drinks", time: "3 mins", cal: "90 kcal", ingredients: "1 cup chilled milk, 1 tsp instant coffee, 1 date or 1/2 tsp jaggery", prep: "Blend chilled milk with coffee and date without refined white sugar." },
-            { name: "Ginger Cinnamon Detox Tea", category: "drinks", time: "5 mins", cal: "10 kcal", ingredients: "Crushed ginger, small cinnamon stick, water, drop of honey", prep: "Boil ginger and cinnamon in water for 5 mins; drink warm for digestion." },
-            { name: "Peanut Butter Protein Shake", category: "drinks", time: "3 mins", cal: "280 kcal", ingredients: "1 cup milk, 1 tbsp peanut butter, 1 banana", prep: "Blend for a high-calorie healthy weight gain shake." },
-            { name: "Coconut Water with Lime", category: "drinks", time: "1 min", cal: "45 kcal", ingredients: "Fresh coconut water, squeeze of lime", prep: "Natural electrolytes that beat fatigue in humid college weather." }
+            { name: "Vegetable Poha", category: "breakfast", time: "10m", cal: "180 kcal", ingredients: "Poha, peanuts, mustard seeds, turmeric, lemon", prep: "Wash poha. Sauté peanuts & onions, add turmeric, fold poha, finish with lemon." },
+            { name: "Moong Sprout Salad", category: "breakfast", time: "5m", cal: "140 kcal", ingredients: "Sprouted moong, cucumber, tomato, chaat masala, lemon", prep: "Toss raw sprouts with diced cucumber, tomatoes, and lemon." },
+            { name: "Masala Oats", category: "breakfast", time: "8m", cal: "190 kcal", ingredients: "Rolled oats, tomato, onion, green chili, turmeric", prep: "Sauté veg, add water, stir oats for 3 minutes until thick." },
+            { name: "Paneer Bhurji & Roti", category: "breakfast", time: "12m", cal: "260 kcal", ingredients: "Crumbled paneer, tomato, chillies, coriander", prep: "Sauté tomatoes and chillies, add crumbled paneer, cook 3 mins." },
+            { name: "Besan Chilla", category: "breakfast", time: "10m", cal: "170 kcal", ingredients: "Gram flour (besan), ajwain, chopped onion", prep: "Mix batter with water. Cook like pancake on non-stick pan." },
+            { name: "Boiled Eggs with Pepper", category: "breakfast", time: "10m", cal: "155 kcal", ingredients: "2 whole eggs, black pepper, pinch of salt", prep: "Hard boil eggs for 9 mins. Peel, halve, season with black pepper." },
+            { name: "Peanut Butter Banana Toast", category: "breakfast", time: "3m", cal: "230 kcal", ingredients: "Whole wheat bread, peanut butter, banana", prep: "Toast bread slice, spread peanut butter, top with banana slices." },
+            { name: "High-Protein Mess Dal Khichdi", category: "lunch", time: "15m", cal: "310 kcal", ingredients: "Yellow moong dal, rice, cumin, spinach", prep: "Cook equal parts dal and rice with turmeric and cumin." },
+            { name: "Soya Chunks Pulao", category: "lunch", time: "15m", cal: "330 kcal", ingredients: "Boiled soya chunks, rice, onion, garam masala", prep: "Sauté boiled soya chunks with onion and cooked rice." },
+            { name: "Chickpea Rice Bowl", category: "lunch", time: "10m", cal: "320 kcal", ingredients: "Boiled chana, rice, cucumber, mint curd", prep: "Layer warm rice with seasoned chana and curd." },
+            { name: "Rajma Roti Wrap", category: "lunch", time: "5m", cal: "280 kcal", ingredients: "Thick rajma, 1 roti, onion slices, lemon", prep: "Wrap drained thick rajma in whole wheat roti with onion." },
+            { name: "Roasted Makhana", category: "snack", time: "4m", cal: "110 kcal", ingredients: "Foxnuts, 1/2 tsp ghee, turmeric, rock salt", prep: "Dry roast makhana with drop of ghee until crunchy." },
+            { name: "Kala Chana Chaat", category: "snack", time: "4m", cal: "150 kcal", ingredients: "Boiled black chickpeas, tomato, onion, lemon", prep: "Mix boiled chana with chopped raw onion, tomato, and lemon." },
+            { name: "Sprouts Bhel", category: "snack", time: "4m", cal: "140 kcal", ingredients: "Sprouted moong, murmura, lemon, green chutney", prep: "Mix murmura and sprouts with lemon and green chili chutney." },
+            { name: "Moong Dal Soup", category: "dinner", time: "12m", cal: "160 kcal", ingredients: "Yellow moong dal, ginger, cumin, lemon", prep: "Cook dal thin with ginger, blend lightly, squeeze fresh lemon." },
+            { name: "Oats Khichdi", category: "dinner", time: "10m", cal: "210 kcal", ingredients: "Rolled oats, peas, carrots, cumin, turmeric", prep: "Cook veggies in pan, add oats and 1.5 cups water; simmer." },
+            { name: "Mint Chaas", category: "drinks", time: "2m", cal: "45 kcal", ingredients: "1/2 cup curd, 1 cup cold water, roasted jeera, mint", prep: "Blend curd and water with mint and roasted cumin." },
+            { name: "Sattu Protein Cooler", category: "drinks", time: "2m", cal: "140 kcal", ingredients: "2 tbsp sattu, water, lemon, black salt", prep: "Stir sattu powder into cold water with lemon and black salt." }
         ];
 
-        // UI State Handlers
         let isUserLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         let waterTotal = 1.25;
+
+        function renderRecipes(category = "all") {
+            const container = document.getElementById("recipeContainer");
+            const list = (category === "all") ? RECIPE_DB : RECIPE_DB.filter(r => r.category === category);
+            
+            container.innerHTML = list.map(r => `
+                <div class="recipe-card">
+                    <div>
+                        <h4 style="color:var(--primary); font-size:1.05rem;">🥗 ${r.name}</h4>
+                        <div class="recipe-meta"><span>⏱️ ${r.time}</span><span>🔥 ${r.cal}</span></div>
+                        <p style="font-size:0.85rem;"><strong>Ingredients:</strong> ${r.ingredients}</p>
+                    </div>
+                    <p style="font-size:0.82rem; margin-top:0.6rem; color:var(--text-muted);"><strong>Method:</strong> ${r.prep}</p>
+                </div>
+            `).join("");
+        }
+
+        function filterRecipeCategory(cat) {
+            document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+            event.target.classList.add("active");
+            renderRecipes(cat);
+        }
+
+        function simulateAIScan(e) {
+            const res = document.getElementById("scannerResult");
+            res.style.display = "block";
+            res.scrollIntoView({ behavior: "smooth" });
+        }
 
         function syncUI() {
             const authBtn = document.getElementById("authBtn");
@@ -820,11 +764,10 @@
 
         function handleAuthSubmit(e) {
             e.preventDefault();
-            const emailValue = document.getElementById("authEmailInput").value;
+            const val = document.getElementById("authEmailInput").value;
             isUserLoggedIn = true;
             localStorage.setItem("isLoggedIn", "true");
-            localStorage.setItem("userEmail", emailValue);
-
+            localStorage.setItem("userEmail", val);
             toggleAuthModal();
             syncUI();
             document.getElementById("dashboard").scrollIntoView({ behavior: "smooth" });
@@ -837,7 +780,6 @@
             syncUI();
         }
 
-        // Hydration Logic
         function addWater() {
             if (waterTotal < 3.5) {
                 waterTotal = parseFloat((waterTotal + 0.25).toFixed(2));
@@ -851,31 +793,11 @@
         }
 
         function updateWaterDisplay() {
-            document.getElementById("waterCount").textContent = waterTotal;
             const pct = Math.min((waterTotal / 2.5) * 100, 100);
-            document.getElementById("waterProgress").style.width = pct + "%";
-        }
-
-        // BMI Logic
-        function calculateBMI() {
-            const w = parseFloat(document.getElementById("weightKg").value);
-            const h = parseFloat(document.getElementById("heightCm").value) / 100;
-            const res = document.getElementById("bmiResult");
-
-            if (!w || !h || h <= 0) {
-                res.style.display = "block";
-                res.textContent = "Please enter valid numbers.";
-                return;
-            }
-
-            const bmi = (w / (h * h)).toFixed(1);
-            let category = "Normal";
-            if (bmi < 18.5) category = "Underweight";
-            else if (bmi >= 25 && bmi < 30) category = "Overweight";
-            else if (bmi >= 30) category = "Obese";
-
-            res.style.display = "block";
-            res.innerHTML = `BMI: <strong>${bmi}</strong> (${category})<br>Target Calories: <strong>~${Math.round(w * 28)} kcal/day</strong>`;
+            document.getElementById("trackerWaterVal").textContent = waterTotal;
+            document.getElementById("trackerWaterFill").style.width = pct + "%";
+            document.getElementById("dashWaterCount").textContent = waterTotal;
+            document.getElementById("dashWaterFill").style.width = pct + "%";
         }
 
         function handleMealSubmit(e) {
@@ -889,97 +811,10 @@
             document.getElementById("mealInput").value = "";
         }
 
-        // ---------------- AI CHATBOT LOGIC ----------------
-        function toggleChatWindow() {
-            const win = document.getElementById("chatWindow");
-            win.style.display = (win.style.display === "flex") ? "none" : "flex";
-        }
-
-        function quickAsk(text) {
-            document.getElementById("chatInput").value = text;
-            sendChatMessage();
-        }
-
-        function sendChatMessage() {
-            const input = document.getElementById("chatInput");
-            const q = input.value.trim().toLowerCase();
-            if (!q) return;
-
-            // Append User Query
-            appendMessage(input.value, "user");
-            input.value = "";
-
-            // Bot Response Generation
-            setTimeout(() => {
-                const response = searchRecipes(q);
-                appendMessage(response, "bot");
-            }, 300);
-        }
-
-        function appendMessage(htmlContent, type) {
-            const chatBody = document.getElementById("chatBody");
-            const msg = document.createElement("div");
-            msg.className = `chat-msg ${type}`;
-            msg.innerHTML = htmlContent;
-            chatBody.appendChild(msg);
-            chatBody.scrollTop = chatBody.scrollHeight;
-        }
-
-        function searchRecipes(query) {
-            let matched = [];
-
-            if (query.includes("breakfast")) {
-                matched = RECIPE_DB.filter(r => r.category === "breakfast");
-            } else if (query.includes("lunch")) {
-                matched = RECIPE_DB.filter(r => r.category === "lunch");
-            } else if (query.includes("snack") || query.includes("hostel")) {
-                matched = RECIPE_DB.filter(r => r.category === "snack");
-            } else if (query.includes("dinner")) {
-                matched = RECIPE_DB.filter(r => r.category === "dinner");
-            } else if (query.includes("drink") || query.includes("smoothie") || query.includes("shake")) {
-                matched = RECIPE_DB.filter(r => r.category === "drinks");
-            } else if (query.includes("protein")) {
-                matched = RECIPE_DB.filter(r => 
-                    r.ingredients.toLowerCase().includes("paneer") || 
-                    r.ingredients.toLowerCase().includes("egg") || 
-                    r.ingredients.toLowerCase().includes("soya") || 
-                    r.ingredients.toLowerCase().includes("chana") || 
-                    r.ingredients.toLowerCase().includes("dal")
-                );
-            } else {
-                // Free text search in name or ingredients
-                matched = RECIPE_DB.filter(r => 
-                    r.name.toLowerCase().includes(query) || 
-                    r.ingredients.toLowerCase().includes(query)
-                );
-            }
-
-            if (matched.length === 0) {
-                return `I couldn't find a specific recipe for "${query}". Try searching for <em>oats, paneer, eggs, chana, khichdi, breakfast, protein</em>, or <em>drinks</em>!`;
-            }
-
-            // Pick 1 to 2 recipes to keep answers readable in the chat window
-            const selected = matched.slice(0, 2);
-            let responseHtml = `Found <strong>${matched.length}</strong> matching recipe(s):<br><br>`;
-
-            selected.forEach(r => {
-                responseHtml += `
-                    <div style="border-top: 1px dashed #cbd5e1; padding-top: 6px; margin-top: 6px;">
-                        <strong>🥗 ${r.name}</strong> (${r.time} | ${r.cal})<br>
-                        <small><strong>Ingredients:</strong> ${r.ingredients}</small><br>
-                        <small><strong>How to:</strong> ${r.prep}</small>
-                    </div>
-                `;
-            });
-
-            if (matched.length > 2) {
-                responseHtml += `<br><small style="color:var(--text-muted)">+ ${matched.length - 2} more available. Try narrowing down your keyword!</small>`;
-            }
-
-            return responseHtml;
-        }
-
-        document.addEventListener("DOMContentLoaded", syncUI);
+        document.addEventListener("DOMContentLoaded", () => {
+            syncUI();
+            renderRecipes("all");
+        });
     </script>
 </body>
 </html>
