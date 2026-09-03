@@ -178,12 +178,30 @@
             cursor: pointer;
             font-size: 0.85rem;
             font-weight: 600;
-            display: none; /* Shown when PWA install prompt is triggered */
+            display: none;
         }
 
         .btn-sm {
             padding: 0.35rem 0.75rem;
             font-size: 0.85rem;
+        }
+
+        .btn-clear-chat {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clear-chat:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
         }
 
         /* Hero Banner */
@@ -714,7 +732,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 3: AI CHATBOX WITH 6 SUGGESTIONS & 60 RECIPES -->
+        <!-- SLIDE 3: AI CHATBOX WITH 6 SUGGESTIONS, 60 RECIPES & CLEAR CHAT -->
         <div id="slide-ai-chatbox" class="slide-view">
             <div class="section-title">
                 <h2>🤖 NutriBot AI Recipe Assistant</h2>
@@ -725,7 +743,10 @@
                 <div class="ai-chat-header">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <h3 style="font-size: 1.05rem;">NutriBot Assistant</h3>
-                        <span style="font-size: 0.75rem; background: rgba(255,255,255,0.25); padding: 3px 8px; border-radius: 10px;">60 Recipes Ready</span>
+                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                            <span style="font-size: 0.75rem; background: rgba(255,255,255,0.25); padding: 3px 8px; border-radius: 10px;">60 Recipes Ready</span>
+                            <button class="btn-clear-chat" onclick="clearChatHistory()" title="Clear chat history">🗑️ Clear Chat</button>
+                        </div>
                     </div>
                     <!-- 6 Direct Recipe Name Suggestions -->
                     <div class="suggestions-bar">
@@ -1100,7 +1121,7 @@
             }
         }
 
-        // Register dummy service worker for PWA criteria
+        // Service Worker registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `self.addEventListener('fetch', function(e) {});`;
@@ -1148,10 +1169,20 @@
             renderRecipes(cat);
         }
 
-        // ---------------- AI CHATBOT ENGINE ----------------
+        // ---------------- AI CHATBOT ENGINE & CLEAR CHAT ----------------
         function askSpecificRecipe(recipeName) {
             document.getElementById("chatInput").value = recipeName;
             sendChatMessage();
+        }
+
+        function clearChatHistory() {
+            const chatBody = document.getElementById("chatBody");
+            chatBody.innerHTML = `
+                <div class="chat-bubble bot">
+                    🧹 <em>Chat history cleared!</em><br>
+                    Hello again! Ask me how to make any dish, search by ingredient, or click any suggestion chip above.
+                </div>
+            `;
         }
 
         function sendChatMessage() {
