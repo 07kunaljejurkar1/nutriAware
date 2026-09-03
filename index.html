@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>nutriAware | Healthy Food Awareness</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#f6fff8;
+    color:#18352a;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#ffffff;
+    padding:15px 7%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 2px 12px #00000015;
+}
+
+.logo{
+    font-size:26px;
+    font-weight:bold;
+    color:#1b8a55;
+}
+
+nav a{
+    text-decoration:none;
+    color:#333;
+    margin-left:22px;
+    font-weight:600;
+}
+
+nav a:hover{
+    color:#1b8a55;
+}
+
+.hero{
+    min-height:88vh;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:60px 8%;
+    background:linear-gradient(135deg,#e9fff1,#ffffff);
+}
+
+.hero-text{
+    max-width:600px;
+}
+
+.hero h1{
+    font-size:55px;
+    color:#167447;
+    margin-bottom:20px;
+}
+
+.hero h2{
+    font-size:25px;
+    margin-bottom:15px;
+}
+
+.hero p{
+    font-size:18px;
+    line-height:1.7;
+    color:#555;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:25px;
+    padding:13px 25px;
+    background:#1b8a55;
+    color:white;
+    border-radius:30px;
+    text-decoration:none;
+    font-weight:bold;
+    border:none;
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#12633d;
+}
+
+.hero-food{
+    font-size:170px;
+}
+
+section{
+    padding:75px 8%;
+}
+
+.title{
+    text-align:center;
+    font-size:35px;
+    color:#167447;
+    margin-bottom:15px;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:40px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:22px;
+}
+
+.card{
+    background:white;
+    padding:28px;
+    border-radius:18px;
+    box-shadow:0 5px 20px #00000010;
+    transition:.3s;
+}
+
+.card:hover{
+    transform:translateY(-7px);
+}
+
+.card .emoji{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.card h3{
+    color:#167447;
+    margin-bottom:10px;
+}
+
+.card p{
+    line-height:1.6;
+    color:#555;
+}
+
+.compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    max-width:800px;
+    margin:auto;
+}
+
+.food-box{
+    padding:30px;
+    background:white;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 5px 20px #00000012;
+}
+
+.food-box h3{
+    font-size:25px;
+    margin:12px;
+}
+
+.food-box .big{
+    font-size:70px;
+}
+
+.tip{
+    max-width:800px;
+    margin:auto;
+    text-align:center;
+    padding:40px;
+    background:#e4f9ec;
+    border-radius:20px;
+}
+
+.tip p{
+    font-size:22px;
+    line-height:1.6;
+}
+
+.survey{
+    max-width:800px;
+    margin:auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 5px 20px #00000012;
+}
+
+.question{
+    margin-bottom:25px;
+}
+
+.question p{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.question label{
+    display:block;
+    margin:8px 0;
+}
+
+select,input{
+    padding:10px;
+    width:100%;
+    border:1px solid #ccc;
+    border-radius:8px;
+    margin-top:5px;
+}
+
+footer{
+    background:#123c2a;
+    color:white;
+    text-align:center;
+    padding:35px;
+}
+
+footer h2{
+    margin-bottom:10px;
+}
+
+@media(max-width:800px){
+
+    nav{
+        flex-direction:column;
+        gap:12px;
+    }
+
+    nav a{
+        margin:5px;
+        font-size:14px;
+    }
+
+    .hero{
+        flex-direction:column;
+        text-align:center;
+        padding-top:50px;
+    }
+
+    .hero h1{
+        font-size:42px;
+    }
+
+    .hero-food{
+        font-size:100px;
+        margin-top:30px;
+    }
+
+    .compare{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">🥗 nutriAware</div>
+
+    <div>
+        <a href="#home">Home</a>
+        <a href="#nutrition">Nutrition</a>
+        <a href="#healthy">Healthy Food</a>
+        <a href="#meals">Meals</a>
+        <a href="#survey">Survey</a>
+    </div>
+</nav>
+
+
+<!-- HOME -->
+<section class="hero" id="home">
+
+    <div class="hero-text">
+
+        <h1>Eat Smart.<br>Live Healthy.</h1>
+
+        <h2>A Smart Nutrition Awareness Platform</h2>
+
+        <p>
+            nutriAware helps students understand nutrition,
+            compare food choices and make healthier,
+            balanced meal decisions.
+        </p>
+
+        <a href="#nutrition" class="btn">
+            Explore Nutrition →
+        </a>
+
+    </div>
+
+    <div class="hero-food">
+        🥗🍎🥑
+    </div>
+
+</section>
+
+
+<!-- NUTRITION -->
+<section id="nutrition">
+
+    <h2 class="title">Nutrition Information</h2>
+
+    <p class="subtitle">
+        Understand the important nutrients your body needs.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="emoji">🍚</div>
+            <h3>Carbohydrates</h3>
+            <p>
+                Carbohydrates provide energy for everyday activities
+                and help fuel the body.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥚</div>
+            <h3>Proteins</h3>
+            <p>
+                Protein is an important nutrient for the body's
+                growth and maintenance.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥑</div>
+            <h3>Fats</h3>
+            <p>
+                Fats are an important part of nutrition and should
+                be included as part of a balanced diet.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍊</div>
+            <h3>Vitamins</h3>
+            <p>
+                Vitamins are essential nutrients that support
+                normal body functions.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥦</div>
+            <h3>Minerals</h3>
+            <p>
+                Minerals are essential nutrients required for
+                different body functions.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">💧</div>
+            <h3>Water</h3>
+            <p>
+                Staying hydrated is an important part of healthy
+                everyday habits.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HEALTHY FOOD -->
+<section id="healthy">
+
+    <h2 class="title">Healthy Food Awareness</h2>
+
+    <p class="subtitle">
+        Make informed choices instead of choosing only by taste
+        or convenience.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="emoji">🍎</div>
+            <h3>Choose Fruits</h3>
+            <p>
+                Include fruits as part of a varied and balanced
+                eating pattern.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥦</div>
+            <h3>Add Vegetables</h3>
+            <p>
+                Vegetables can add important nutrients and variety
+                to meals.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🥛</div>
+            <h3>Better Alternatives</h3>
+            <p>
+                Compare available foods and choose healthier
+                alternatives whenever possible.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🏷️</div>
+            <h3>Read Food Labels</h3>
+            <p>
+                Pay attention to nutrition information and
+                serving sizes when comparing packaged foods.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOD LABEL -->
+<section>
+
+    <h2 class="title">🏷️ Food Label Guide</h2>
+
+    <p class="subtitle">
+        Food labels can help you compare different products.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Calories</h3>
+            <p>
+                Shows the amount of energy provided by a serving.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Protein</h3>
+            <p>
+                Shows the amount of protein present in a serving.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Sugar</h3>
+            <p>
+                Check the sugar information when comparing foods.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Fat</h3>
+            <p>
+                Compare fat information between food choices.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Serving Size</h3>
+            <p>
+                Always check how much food one listed serving represents.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BALANCED MEALS -->
+<section id="meals">
+
+    <h2 class="title">🍽️ Balanced Meal Suggestions</h2>
+
+    <p class="subtitle">
+        Simple ideas for everyday meal planning.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="emoji">🌅</div>
+            <h3>Breakfast</h3>
+            <p>
+                Choose a combination of nutritious foods rather
+                than skipping breakfast.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🍛</div>
+            <h3>Lunch</h3>
+            <p>
+                Aim for variety and balance while selecting your
+                lunch from the canteen or mess.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🌙</div>
+            <h3>Dinner</h3>
+            <p>
+                Select a balanced combination and avoid relying
+                only on convenience.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">⚖️</div>
+            <h3>Portion Balance</h3>
+            <p>
+                Pay attention to portion size and try to maintain
+                variety in your meals.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FOOD COMPARISON -->
+<section>
+
+    <h2 class="title">⚖️ Food Comparison</h2>
+
+    <p class="subtitle">
+        Compare choices before deciding what to eat.
+    </p>
+
+    <div class="compare">
+
+        <div class="food-box">
+            <div class="big">🍔</div>
+            <h3>Fast Food</h3>
+            <p>
+                Convenient choice. Consider comparing its
+                nutrition information with alternatives.
+            </p>
+        </div>
+
+        <div class="food-box">
+            <div class="big">🥪</div>
+            <h3>Healthy Alternative</h3>
+            <p>
+                Consider nutritious alternatives when they are
+                available.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CANTEEN -->
+<section>
+
+    <h2 class="title">🏫 Canteen & Mess Awareness</h2>
+
+    <p class="subtitle">
+        Make smarter choices from the food available around you.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="emoji">🥗</div>
+            <h3>Look for Variety</h3>
+            <p>
+                Compare different available food options before
+                making your choice.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">🔍</div>
+            <h3>Check Information</h3>
+            <p>
+                Use nutrition information to understand your food
+                choices better.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="emoji">💡</div>
+            <h3>Choose Wisely</h3>
+            <p>
+                Don't choose food only because it is convenient
+                or easily available.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DAILY TIP -->
+<section>
+
+    <h2 class="title">💡 Daily Nutrition Tip</h2>
+
+    <div class="tip">
+
+        <p id="tip">
+            “Make your food choices with awareness, not just
+            convenience.”
+        </p>
+
+        <button class="btn" onclick="newTip()">
+            Get Another Tip
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- SURVEY -->
+<section id="survey">
+
+    <h2 class="title">📋 Student Nutrition Survey</h2>
+
+    <p class="subtitle">
+        Help us understand students' nutrition awareness.
+    </p>
+
+    <div class="survey">
+
+        <div class="question">
+            <p>1. Is it difficult to know whether your meal is nutritionally balanced?</p>
+
+            <label>
+                <input type="radio" name="q1"> Yes
+            </label>
+
+            <label>
+                <input type="radio" name="q1"> No
+            </label>
+        </div>
+
+
+        <div class="question">
+            <p>2. Do you understand information given on food labels?</p>
+
+            <label>
+                <input type="radio" name="q2"> Yes
+            </label>
+
+            <label>
+                <input type="radio" name="q2"> No
+            </label>
+        </div>
+
+
+        <div class="question">
+            <p>3. Do you usually choose food based on taste or convenience?</p>
+
+            <label>
+                <input type="radio" name="q3"> Yes
+            </label>
+
+            <label>
+                <input type="radio" name="q3"> No
+            </label>
+        </div>
+
+
+        <div class="question">
+            <p>4. Would you use a system that explains nutrition simply?</p>
+
+            <label>
+                <input type="radio" name="q4"> Yes
+            </label>
+
+            <label>
+                <input type="radio" name="q4"> No
+            </label>
+        </div>
+
+
+        <div class="question">
+            <p>5. Would healthy alternatives and meal suggestions help you?</p>
+
+            <label>
+                <input type="radio" name="q5"> Yes
+            </label>
+
+            <label>
+                <input type="radio" name="q5"> No
+            </label>
+        </div>
+
+
+        <button class="btn" onclick="submitSurvey()">
+            Submit Survey
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <h2>🥗 nutriAware</h2>
+
+    <p>
+        A Smart Awareness Platform for Better Food Choices
+    </p>
+
+    <br>
+
+    <p>
+        SDG 3 – Good Health and Well-Being
+    </p>
+
+    <br>
+
+    <p>Team G18 | Team No. 18</p>
+
+</footer>
+
+
+<script>
+
+const tips = [
+
+"Make your food choices with awareness, not just convenience.",
+
+"Compare foods before choosing between available options.",
+
+"Pay attention to food labels and serving sizes.",
+
+"Try to include variety in your meals.",
+
+"Healthy alternatives can make everyday food choices easier.",
+
+"Understanding nutrition can help you make more informed food decisions."
+
+];
+
+function newTip(){
+
+    let random = Math.floor(Math.random() * tips.length);
+
+    document.getElementById("tip").innerText =
+        "“" + tips[random] + "”";
+
+}
+
+function submitSurvey(){
+
+    alert("Thank you for completing the Nutrition Awareness Survey! 🥗");
+
+}
+
+</script>
+
+</body>
+</html>
