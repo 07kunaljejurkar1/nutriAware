@@ -31,7 +31,7 @@
             line-height: 1.6;
         }
 
-        /* Navbar Layout - Links Left-Aligned */
+        /* NAVBAR: Brand + Links Left-Aligned Together */
         nav {
             display: flex;
             justify-content: space-between;
@@ -44,10 +44,10 @@
             z-index: 1000;
         }
 
-        .nav-left {
+        .nav-left-group {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 2.2rem;
         }
 
         .logo {
@@ -58,12 +58,13 @@
             display: flex;
             align-items: center;
             gap: 0.4rem;
+            white-space: nowrap;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 1.4rem;
+            gap: 1.5rem;
         }
 
         .nav-links a {
@@ -72,6 +73,7 @@
             font-weight: 600;
             font-size: 0.95rem;
             transition: color 0.2s ease;
+            white-space: nowrap;
         }
 
         .nav-links a:hover {
@@ -118,7 +120,7 @@
             color: var(--text-muted);
         }
 
-        /* Hero Section */
+        /* Hero */
         .hero {
             display: flex;
             align-items: center;
@@ -259,7 +261,7 @@
         .swap-bad { color: var(--danger); font-weight: 500; }
         .swap-good { color: var(--primary); font-weight: 600; }
 
-        /* Calculator Styles */
+        /* Calculator */
         .calc-form {
             display: flex;
             flex-direction: column;
@@ -342,7 +344,7 @@
         }
 
         @media (max-width: 768px) {
-            .nav-left { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+            .nav-left-group { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
             .nav-links { flex-wrap: wrap; gap: 0.8rem; }
             .hero { flex-direction: column; text-align: center; gap: 1.5rem; }
         }
@@ -350,8 +352,9 @@
 </head>
 <body>
 
+    <!-- Navigation (Logo + Nav Links on the Left, Login/Logout on the Right) -->
     <nav>
-        <div class="nav-left">
+        <div class="nav-left-group">
             <a href="#home" class="logo">🥗 nutriAware</a>
             <div class="nav-links">
                 <a href="#home">Home</a>
@@ -366,12 +369,14 @@
         </div>
     </nav>
 
+    <!-- Student Dashboard -->
     <section id="dashboard" class="dashboard-section">
         <div class="section-title" style="text-align: left; margin-bottom: 1.5rem;">
             <h2>👋 Welcome back, <span id="studentDisplayName">Student</span></h2>
             <p>Your personalized campus wellness hub and nutrition tracker.</p>
         </div>
 
+        <!-- Metric Cards -->
         <div class="stats-grid">
             <div class="stat-card">
                 <h4>Daily Hydration</h4>
@@ -387,7 +392,7 @@
 
             <div class="stat-card">
                 <h4>Calories Logged</h4>
-                <div class="stat-value"><span id="calCount">1,450</span> kcal</div>
+                <div class="stat-value">1,450 kcal</div>
                 <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
                 <small style="color: var(--text-muted);">Target: 2,100 kcal / day</small>
             </div>
@@ -399,7 +404,9 @@
             </div>
         </div>
 
+        <!-- Dashboard Panels Grid -->
         <div class="dashboard-panels">
+            <!-- Panel 1: Meal Logger -->
             <div class="panel-card">
                 <h3>📝 Daily Meal Logger</h3>
                 <form onsubmit="handleMealSubmit(event)" class="meal-form">
@@ -418,6 +425,7 @@
                 </ul>
             </div>
 
+            <!-- Panel 2: Canteen Swaps -->
             <div class="panel-card">
                 <h3>💡 Canteen & Mess Swaps</h3>
                 <div class="swap-item">
@@ -437,6 +445,7 @@
                 </div>
             </div>
 
+            <!-- Panel 3: BMI Calculator -->
             <div class="panel-card">
                 <h3>⚖️ BMI & Calorie Target</h3>
                 <div class="calc-form">
@@ -447,6 +456,7 @@
                 <div id="bmiResult" class="calc-result"></div>
             </div>
 
+            <!-- Panel 4: Quick Food Search -->
             <div class="panel-card">
                 <h3>🔍 Quick Food Nutri-Search</h3>
                 <input type="text" class="search-box" id="foodSearchInput" placeholder="Search canteen items..." onkeyup="filterFoodSearch()">
@@ -460,6 +470,7 @@
         </div>
     </section>
 
+    <!-- Hero -->
     <section id="home" class="hero">
         <div>
             <h1>Eat Smart.<br>Live Healthy.</h1>
@@ -471,6 +482,7 @@
         <div class="hero-emoji">🥗🍎🥑</div>
     </section>
 
+    <!-- Nutrition Information -->
     <section id="nutrition">
         <div class="section-title">
             <h2>Essential Nutrients</h2>
@@ -486,6 +498,7 @@
         </div>
     </section>
 
+    <!-- Healthy Food -->
     <section id="healthy" style="background: white;">
         <div class="section-title">
             <h2>Smart Choices on Campus</h2>
@@ -499,6 +512,7 @@
         </div>
     </section>
 
+    <!-- Balanced Meals -->
     <section id="meals">
         <div class="section-title">
             <h2>Balanced Plate Ideas</h2>
@@ -511,12 +525,14 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <h2 style="color: white; margin-bottom: 0.3rem;">🥗 nutriAware</h2>
         <p>A Smart Awareness Platform for Better Food Choices</p>
         <p>SDG 3 – Good Health and Well-Being | Team G18</p>
     </footer>
 
+    <!-- Auth Modal -->
     <div id="authModal" class="modal-overlay">
         <div class="modal-box">
             <span class="close-btn" onclick="toggleAuthModal()">&times;</span>
@@ -531,6 +547,7 @@
         </div>
     </div>
 
+    <!-- JavaScript -->
     <script>
         let isUserLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         let waterTotal = 1.25;
@@ -596,7 +613,6 @@
             document.getElementById("mealInput").value = "";
         }
 
-        // Water Tracker Functions
         function addWater() {
             if (waterTotal < 3.5) {
                 waterTotal = parseFloat((waterTotal + 0.25).toFixed(2));
@@ -615,7 +631,6 @@
             document.getElementById("waterProgress").style.width = percentage + "%";
         }
 
-        // BMI & Calorie Calculator
         function calculateBMI() {
             const weight = parseFloat(document.getElementById("weightKg").value);
             const height = parseFloat(document.getElementById("heightCm").value) / 100;
@@ -639,7 +654,6 @@
             resultBox.innerHTML = `BMI: <strong>${bmi}</strong> (${category})<br>Est. Maintenance Intake: <strong>~${estCalories} kcal/day</strong>`;
         }
 
-        // Live Food Search
         function filterFoodSearch() {
             const query = document.getElementById("foodSearchInput").value.toLowerCase();
             const items = document.querySelectorAll("#foodList li");
