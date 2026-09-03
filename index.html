@@ -1,779 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nutriAware - Smart Nutrition Awareness Platform</title>
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-hover: #1b5e20;
+            --bg-light: #f7faf9;
+            --card-bg: #ffffff;
+            --text-dark: #2c3e50;
+            --text-muted: #666666;
+            --border: #e2e8f0;
+            --danger: #d32f2f;
+        }
 
-<title>nutriAware | Healthy Food Awareness</title>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
-    scroll-behavior:smooth;
-}
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
 
-body{
-    background:#f6fff8;
-    color:#18352a;
-}
+        /* Navbar */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-nav{
-    position:sticky;
-    top:0;
-    z-index:1000;
-    background:#ffffff;
-    padding:15px 7%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 2px 12px #00000015;
-}
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
 
-.logo{
-    font-size:26px;
-    font-weight:bold;
-    color:#1b8a55;
-}
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
 
-nav a{
-    text-decoration:none;
-    color:#333;
-    margin-left:22px;
-    font-weight:600;
-}
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
 
-nav a:hover{
-    color:#1b8a55;
-}
+        .nav-links a:hover {
+            color: var(--primary);
+        }
 
-.hero{
-    min-height:88vh;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:60px 8%;
-    background:linear-gradient(135deg,#e9fff1,#ffffff);
-}
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
 
-.hero-text{
-    max-width:600px;
-}
+        .btn-primary:hover {
+            background: var(--primary-hover);
+        }
 
-.hero h1{
-    font-size:55px;
-    color:#167447;
-    margin-bottom:20px;
-}
+        /* Common Section Layouts */
+        section {
+            padding: 4rem 5%;
+        }
 
-.hero h2{
-    font-size:25px;
-    margin-bottom:15px;
-}
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #e8f5e9;
+            min-height: 60vh;
+        }
 
-.hero p{
-    font-size:18px;
-    line-height:1.7;
-    color:#555;
-}
+        .hero h1 {
+            font-size: 2.8rem;
+            line-height: 1.2;
+            color: var(--primary-hover);
+        }
 
-.btn{
-    display:inline-block;
-    margin-top:25px;
-    padding:13px 25px;
-    background:#1b8a55;
-    color:white;
-    border-radius:30px;
-    text-decoration:none;
-    font-weight:bold;
-    border:none;
-    cursor:pointer;
-}
+        .hero h2 {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            margin: 0.8rem 0;
+            font-weight: 400;
+        }
 
-.btn:hover{
-    background:#12633d;
-}
+        .hero-emoji {
+            font-size: 5rem;
+        }
 
-.hero-food{
-    font-size:170px;
-}
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
 
-section{
-    padding:75px 8%;
-}
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary);
+        }
 
-.title{
-    text-align:center;
-    font-size:35px;
-    color:#167447;
-    margin-bottom:15px;
-}
+        /* Standard Grid System */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
 
-.subtitle{
-    text-align:center;
-    color:#666;
-    margin-bottom:40px;
-}
+        .card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
 
-.cards{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:22px;
-}
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+        }
 
-.card{
-    background:white;
-    padding:28px;
-    border-radius:18px;
-    box-shadow:0 5px 20px #00000010;
-    transition:.3s;
-}
+        /* Dashboard Styles */
+        .dashboard-section {
+            background: #edf7ed;
+            border-bottom: 2px solid var(--border);
+            display: none; /* Controlled via JS */
+        }
 
-.card:hover{
-    transform:translateY(-7px);
-}
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
 
-.card .emoji{
-    font-size:45px;
-    margin-bottom:15px;
-}
+        .stat-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-.card h3{
-    color:#167447;
-    margin-bottom:10px;
-}
+        .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 0.4rem 0;
+        }
 
-.card p{
-    line-height:1.6;
-    color:#555;
-}
+        .progress-bar {
+            background: var(--border);
+            border-radius: 4px;
+            height: 6px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
 
-.compare{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:25px;
-    max-width:800px;
-    margin:auto;
-}
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+        }
 
-.food-box{
-    padding:30px;
-    background:white;
-    border-radius:18px;
-    text-align:center;
-    box-shadow:0 5px 20px #00000012;
-}
+        .dashboard-panels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
 
-.food-box h3{
-    font-size:25px;
-    margin:12px;
-}
+        .panel-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-.food-box .big{
-    font-size:70px;
-}
+        .meal-form {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
 
-.tip{
-    max-width:800px;
-    margin:auto;
-    text-align:center;
-    padding:40px;
-    background:#e4f9ec;
-    border-radius:20px;
-}
+        .meal-form select, .meal-form input {
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
 
-.tip p{
-    font-size:22px;
-    line-height:1.6;
-}
+        .meal-form input {
+            flex: 1;
+        }
 
-.survey{
-    max-width:800px;
-    margin:auto;
-    background:white;
-    padding:35px;
-    border-radius:20px;
-    box-shadow:0 5px 20px #00000012;
-}
+        .logged-items {
+            list-style: none;
+            max-height: 150px;
+            overflow-y: auto;
+        }
 
-.question{
-    margin-bottom:25px;
-}
+        .logged-items li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
 
-.question p{
-    font-weight:bold;
-    margin-bottom:10px;
-}
+        .swap-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
 
-.question label{
-    display:block;
-    margin:8px 0;
-}
+        .swap-bad { color: var(--danger); }
+        .swap-good { color: var(--primary); font-weight: 600; }
 
-select,input{
-    padding:10px;
-    width:100%;
-    border:1px solid #ccc;
-    border-radius:8px;
-    margin-top:5px;
-}
+        /* Auth Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(2px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-footer{
-    background:#123c2a;
-    color:white;
-    text-align:center;
-    padding:35px;
-}
+        .modal-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 360px;
+            position: relative;
+        }
 
-footer h2{
-    margin-bottom:10px;
-}
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
 
-@media(max-width:800px){
+        .modal-box form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
 
-    nav{
-        flex-direction:column;
-        gap:12px;
-    }
+        .modal-box input {
+            padding: 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
 
-    nav a{
-        margin:5px;
-        font-size:14px;
-    }
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 2rem 5%;
+        }
 
-    .hero{
-        flex-direction:column;
-        text-align:center;
-        padding-top:50px;
-    }
+        footer h2 {
+            margin-bottom: 0.5rem;
+        }
 
-    .hero h1{
-        font-size:42px;
-    }
-
-    .hero-food{
-        font-size:100px;
-        margin-top:30px;
-    }
-
-    .compare{
-        grid-template-columns:1fr;
-    }
-}
-</style>
+        footer p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- NAVIGATION -->
-<nav>
-    <div class="logo">🥗 nutriAware</div>
+    <nav>
+        <div class="logo">🥗 nutriAware</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#nutrition">Nutrition</a>
+            <a href="#healthy">Healthy Food</a>
+            <a href="#meals">Meals</a>
+            <a href="#dashboard" id="dashboardNavLink" style="display: none;">Dashboard</a>
+            <button id="authBtn" class="btn-primary" onclick="toggleAuthModal()">Login</button>
+        </div>
+    </nav>
 
-    <div>
-        <a href="#home">Home</a>
-        <a href="#nutrition">Nutrition</a>
-        <a href="#healthy">Healthy Food</a>
-        <a href="#meals">Meals</a>
-        <a href="#survey">Survey</a>
-    </div>
-</nav>
-
-
-<!-- HOME -->
-<section class="hero" id="home">
-
-    <div class="hero-text">
-
-        <h1>Eat Smart.<br>Live Healthy.</h1>
-
-        <h2>A Smart Nutrition Awareness Platform</h2>
-
-        <p>
-            nutriAware helps students understand nutrition,
-            compare food choices and make healthier,
-            balanced meal decisions.
-        </p>
-
-        <a href="#nutrition" class="btn">
-            Explore Nutrition →
-        </a>
-
-    </div>
-
-    <div class="hero-food">
-        🥗🍎🥑
-    </div>
-
-</section>
-
-
-<!-- NUTRITION -->
-<section id="nutrition">
-
-    <h2 class="title">Nutrition Information</h2>
-
-    <p class="subtitle">
-        Understand the important nutrients your body needs.
-    </p>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="emoji">🍚</div>
-            <h3>Carbohydrates</h3>
-            <p>
-                Carbohydrates provide energy for everyday activities
-                and help fuel the body.
-            </p>
+    <section id="dashboard" class="dashboard-section">
+        <div class="section-title" style="text-align: left; margin-bottom: 1rem;">
+            <h2>👋 Welcome, <span id="studentDisplayName">Student</span></h2>
+            <p style="color: var(--text-muted);">Track your daily intake, balanced choices, and smart dining-hall swaps.</p>
         </div>
 
-        <div class="card">
-            <div class="emoji">🥚</div>
-            <h3>Proteins</h3>
-            <p>
-                Protein is an important nutrient for the body's
-                growth and maintenance.
-            </p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Daily Water Intake</h4>
+                <div class="stat-value">1.8 / 2.5 L</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 72%;"></div></div>
+            </div>
+            <div class="stat-card">
+                <h4>Calories Logged</h4>
+                <div class="stat-value">1,450 kcal</div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 65%;"></div></div>
+            </div>
+            <div class="stat-card">
+                <h4>Diet Quality</h4>
+                <div class="stat-value">B+ (Good)</div>
+                <small style="color: var(--text-muted);">High protein, balanced carbs</small>
+            </div>
         </div>
 
-        <div class="card">
-            <div class="emoji">🥑</div>
-            <h3>Fats</h3>
-            <p>
-                Fats are an important part of nutrition and should
-                be included as part of a balanced diet.
-            </p>
+        <div class="dashboard-panels">
+            <div class="panel-card">
+                <h3>📝 Quick Meal Logger</h3>
+                <form onsubmit="handleMealSubmit(event)" class="meal-form">
+                    <select id="mealTypeSelect" required>
+                        <option value="Breakfast">Breakfast</option>
+                        <option value="Lunch">Lunch</option>
+                        <option value="Dinner">Dinner</option>
+                        <option value="Snack">Snack</option>
+                    </select>
+                    <input type="text" id="mealInput" placeholder="What did you eat?" required>
+                    <button type="submit" class="btn-primary">Add</button>
+                </form>
+                <ul id="mealListContainer" class="logged-items">
+                    <li><span>Oats & Banana</span> <small>Breakfast</small></li>
+                    <li><span>Dal, Rice & Curd</span> <small>Lunch</small></li>
+                </ul>
+            </div>
+
+            <div class="panel-card">
+                <h3>💡 Smart Canteen Swaps</h3>
+                <div class="swap-item">
+                    <span class="swap-bad">Fried Samosa / Puffs</span>
+                    <span>➔</span>
+                    <span class="swap-good">Boiled Eggs / Sprouts</span>
+                </div>
+                <div class="swap-item">
+                    <span class="swap-bad">Carbonated Soft Drink</span>
+                    <span>➔</span>
+                    <span class="swap-good">Chaas / Lemon Water</span>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="card">
-            <div class="emoji">🍊</div>
-            <h3>Vitamins</h3>
-            <p>
-                Vitamins are essential nutrients that support
-                normal body functions.
+    <section id="home" class="hero">
+        <div>
+            <h1>Eat Smart.<br>Live Healthy.</h1>
+            <h2>A Smart Nutrition Awareness Platform</h2>
+            <p style="max-width: 480px; margin-bottom: 1.5rem;">
+                nutriAware helps students understand nutrition, compare food choices, and make healthier, balanced meal decisions.
             </p>
+            <a href="#nutrition" class="btn-primary" style="text-decoration: none;">Explore Nutrition →</a>
         </div>
+        <div class="hero-emoji">🥗🍎🥑</div>
+    </section>
 
-        <div class="card">
-            <div class="emoji">🥦</div>
-            <h3>Minerals</h3>
-            <p>
-                Minerals are essential nutrients required for
-                different body functions.
-            </p>
+    <section id="nutrition">
+        <div class="section-title">
+            <h2>Nutrition Information</h2>
+            <p>Understand the essential nutrients your body requires.</p>
         </div>
-
-        <div class="card">
-            <div class="emoji">💧</div>
-            <h3>Water</h3>
-            <p>
-                Staying hydrated is an important part of healthy
-                everyday habits.
-            </p>
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">🍚</div><h3>Carbohydrates</h3><p>Provides everyday energy.</p></div>
+            <div class="card"><div class="card-icon">🥚</div><h3>Proteins</h3><p>Supports muscle growth and repair.</p></div>
+            <div class="card"><div class="card-icon">🥑</div><h3>Fats</h3><p>Essential for hormone balance.</p></div>
+            <div class="card"><div class="card-icon">🍊</div><h3>Vitamins</h3><p>Regulates internal bodily functions.</p></div>
+            <div class="card"><div class="card-icon">🥦</div><h3>Minerals</h3><p>Maintains bone and cell vitality.</p></div>
+            <div class="card"><div class="card-icon">💧</div><h3>Water</h3><p>Crucial for daily hydration.</p></div>
         </div>
+    </section>
 
-    </div>
-
-</section>
-
-
-<!-- HEALTHY FOOD -->
-<section id="healthy">
-
-    <h2 class="title">Healthy Food Awareness</h2>
-
-    <p class="subtitle">
-        Make informed choices instead of choosing only by taste
-        or convenience.
-    </p>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="emoji">🍎</div>
-            <h3>Choose Fruits</h3>
-            <p>
-                Include fruits as part of a varied and balanced
-                eating pattern.
-            </p>
+    <section id="healthy" style="background: white;">
+        <div class="section-title">
+            <h2>Healthy Food Awareness</h2>
+            <p>Make choices based on nutrition rather than convenience alone.</p>
         </div>
-
-        <div class="card">
-            <div class="emoji">🥦</div>
-            <h3>Add Vegetables</h3>
-            <p>
-                Vegetables can add important nutrients and variety
-                to meals.
-            </p>
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">🍎</div><h3>Choose Fruits</h3><p>Add vitamins and dietary fiber to your diet.</p></div>
+            <div class="card"><div class="card-icon">🥦</div><h3>Add Vegetables</h3><p>Improves digestion and provides essential micronutrients.</p></div>
+            <div class="card"><div class="card-icon">🥛</div><h3>Better Alternatives</h3><p>Opt for low-sugar dairy and whole grains.</p></div>
+            <div class="card"><div class="card-icon">🏷️</div><h3>Read Food Labels</h3><p>Check serving sizes and hidden sugars.</p></div>
         </div>
+    </section>
 
-        <div class="card">
-            <div class="emoji">🥛</div>
-            <h3>Better Alternatives</h3>
-            <p>
-                Compare available foods and choose healthier
-                alternatives whenever possible.
-            </p>
+    <section id="meals">
+        <div class="section-title">
+            <h2>Balanced Meal Suggestions</h2>
+            <p>Everyday guidance for mess and canteen dining.</p>
         </div>
-
-        <div class="card">
-            <div class="emoji">🏷️</div>
-            <h3>Read Food Labels</h3>
-            <p>
-                Pay attention to nutrition information and
-                serving sizes when comparing packaged foods.
-            </p>
+        <div class="card-grid">
+            <div class="card"><div class="card-icon">🌅</div><h3>Breakfast</h3><p>Do not skip meals; select sustained fuel sources.</p></div>
+            <div class="card"><div class="card-icon">🍛</div><h3>Lunch</h3><p>Aim for a balanced proportion of protein, grains, and greens.</p></div>
+            <div class="card"><div class="card-icon">🌙</div><h3>Dinner</h3><p>Keep portions moderate and avoid high-oil foods before bed.</p></div>
         </div>
+    </section>
 
+    <footer>
+        <h2>🥗 nutriAware</h2>
+        <p>A Smart Awareness Platform for Better Food Choices</p>
+        <p style="margin-top: 0.5rem;">SDG 3 – Good Health and Well-Being | Team G18</p>
+    </footer>
+
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="toggleAuthModal()">&times;</span>
+            <h3 style="color: var(--primary);">Student Login</h3>
+            <form onsubmit="handleAuthSubmit(event)">
+                <label style="font-size: 0.85rem; font-weight: 600;">Email or Student ID</label>
+                <input type="text" id="authEmailInput" placeholder="student@college.edu" required>
+                <label style="font-size: 0.85rem; font-weight: 600;">Password</label>
+                <input type="password" required placeholder="••••••••">
+                <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">Sign In</button>
+            </form>
+        </div>
     </div>
 
-</section>
-
-
-<!-- FOOD LABEL -->
-<section>
-
-    <h2 class="title">🏷️ Food Label Guide</h2>
-
-    <p class="subtitle">
-        Food labels can help you compare different products.
-    </p>
-
-    <div class="cards">
-
-        <div class="card">
-            <h3>Calories</h3>
-            <p>
-                Shows the amount of energy provided by a serving.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Protein</h3>
-            <p>
-                Shows the amount of protein present in a serving.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Sugar</h3>
-            <p>
-                Check the sugar information when comparing foods.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Fat</h3>
-            <p>
-                Compare fat information between food choices.
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Serving Size</h3>
-            <p>
-                Always check how much food one listed serving represents.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- BALANCED MEALS -->
-<section id="meals">
-
-    <h2 class="title">🍽️ Balanced Meal Suggestions</h2>
-
-    <p class="subtitle">
-        Simple ideas for everyday meal planning.
-    </p>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="emoji">🌅</div>
-            <h3>Breakfast</h3>
-            <p>
-                Choose a combination of nutritious foods rather
-                than skipping breakfast.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="emoji">🍛</div>
-            <h3>Lunch</h3>
-            <p>
-                Aim for variety and balance while selecting your
-                lunch from the canteen or mess.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="emoji">🌙</div>
-            <h3>Dinner</h3>
-            <p>
-                Select a balanced combination and avoid relying
-                only on convenience.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="emoji">⚖️</div>
-            <h3>Portion Balance</h3>
-            <p>
-                Pay attention to portion size and try to maintain
-                variety in your meals.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- FOOD COMPARISON -->
-<section>
-
-    <h2 class="title">⚖️ Food Comparison</h2>
-
-    <p class="subtitle">
-        Compare choices before deciding what to eat.
-    </p>
-
-    <div class="compare">
-
-        <div class="food-box">
-            <div class="big">🍔</div>
-            <h3>Fast Food</h3>
-            <p>
-                Convenient choice. Consider comparing its
-                nutrition information with alternatives.
-            </p>
-        </div>
-
-        <div class="food-box">
-            <div class="big">🥪</div>
-            <h3>Healthy Alternative</h3>
-            <p>
-                Consider nutritious alternatives when they are
-                available.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- CANTEEN -->
-<section>
-
-    <h2 class="title">🏫 Canteen & Mess Awareness</h2>
-
-    <p class="subtitle">
-        Make smarter choices from the food available around you.
-    </p>
-
-    <div class="cards">
-
-        <div class="card">
-            <div class="emoji">🥗</div>
-            <h3>Look for Variety</h3>
-            <p>
-                Compare different available food options before
-                making your choice.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="emoji">🔍</div>
-            <h3>Check Information</h3>
-            <p>
-                Use nutrition information to understand your food
-                choices better.
-            </p>
-        </div>
-
-        <div class="card">
-            <div class="emoji">💡</div>
-            <h3>Choose Wisely</h3>
-            <p>
-                Don't choose food only because it is convenient
-                or easily available.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- DAILY TIP -->
-<section>
-
-    <h2 class="title">💡 Daily Nutrition Tip</h2>
-
-    <div class="tip">
-
-        <p id="tip">
-            “Make your food choices with awareness, not just
-            convenience.”
-        </p>
-
-        <button class="btn" onclick="newTip()">
-            Get Another Tip
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- SURVEY -->
-<section id="survey">
-
-    <h2 class="title">📋 Student Nutrition Survey</h2>
-
-    <p class="subtitle">
-        Help us understand students' nutrition awareness.
-    </p>
-
-    <div class="survey">
-
-        <div class="question">
-            <p>1. Is it difficult to know whether your meal is nutritionally balanced?</p>
-
-            <label>
-                <input type="radio" name="q1"> Yes
-            </label>
-
-            <label>
-                <input type="radio" name="q1"> No
-            </label>
-        </div>
-
-
-        <div class="question">
-            <p>2. Do you understand information given on food labels?</p>
-
-            <label>
-                <input type="radio" name="q2"> Yes
-            </label>
-
-            <label>
-                <input type="radio" name="q2"> No
-            </label>
-        </div>
-
-
-        <div class="question">
-            <p>3. Do you usually choose food based on taste or convenience?</p>
-
-            <label>
-                <input type="radio" name="q3"> Yes
-            </label>
-
-            <label>
-                <input type="radio" name="q3"> No
-            </label>
-        </div>
-
-
-        <div class="question">
-            <p>4. Would you use a system that explains nutrition simply?</p>
-
-            <label>
-                <input type="radio" name="q4"> Yes
-            </label>
-
-            <label>
-                <input type="radio" name="q4"> No
-            </label>
-        </div>
-
-
-        <div class="question">
-            <p>5. Would healthy alternatives and meal suggestions help you?</p>
-
-            <label>
-                <input type="radio" name="q5"> Yes
-            </label>
-
-            <label>
-                <input type="radio" name="q5"> No
-            </label>
-        </div>
-
-
-        <button class="btn" onclick="submitSurvey()">
-            Submit Survey
-        </button>
-
-    </div>
-
-</section>
-
-
-<!-- FOOTER -->
-<footer>
-
-    <h2>🥗 nutriAware</h2>
-
-    <p>
-        A Smart Awareness Platform for Better Food Choices
-    </p>
-
-    <br>
-
-    <p>
-        SDG 3 – Good Health and Well-Being
-    </p>
-
-    <br>
-
-    <p>Team G18 | Team No. 18</p>
-
-</footer>
-
-
-<script>
-
-const tips = [
-
-"Make your food choices with awareness, not just convenience.",
-
-"Compare foods before choosing between available options.",
-
-"Pay attention to food labels and serving sizes.",
-
-"Try to include variety in your meals.",
-
-"Healthy alternatives can make everyday food choices easier.",
-
-"Understanding nutrition can help you make more informed food decisions."
-
-];
-
-function newTip(){
-
-    let random = Math.floor(Math.random() * tips.length);
-
-    document.getElementById("tip").innerText =
-        "“" + tips[random] + "”";
-
-}
-
-function submitSurvey(){
-
-    alert("Thank you for completing the Nutrition Awareness Survey! 🥗");
-
-}
-
-</script>
-
+    <script>
+        // Check session storage for existing auth
+        let isUserLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+        function syncUI() {
+            const authBtn = document.getElementById("authBtn");
+            const dashboard = document.getElementById("dashboard");
+            const dashboardNavLink = document.getElementById("dashboardNavLink");
+            const savedEmail = localStorage.getItem("userEmail");
+
+            if (isUserLoggedIn) {
+                authBtn.textContent = "Logout";
+                authBtn.onclick = logoutUser;
+                dashboard.style.display = "block";
+                dashboardNavLink.style.display = "inline";
+
+                if (savedEmail) {
+                    document.getElementById("studentDisplayName").textContent = savedEmail.split("@")[0];
+                }
+            } else {
+                authBtn.textContent = "Login";
+                authBtn.onclick = toggleAuthModal;
+                dashboard.style.display = "none";
+                dashboardNavLink.style.display = "none";
+            }
+        }
+
+        function toggleAuthModal() {
+            const modal = document.getElementById("authModal");
+            modal.style.display = (modal.style.display === "flex") ? "none" : "flex";
+        }
+
+        function handleAuthSubmit(e) {
+            e.preventDefault();
+            const emailValue = document.getElementById("authEmailInput").value;
+
+            // Save state to local browser memory
+            isUserLoggedIn = true;
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("userEmail", emailValue);
+
+            toggleAuthModal();
+            syncUI();
+
+            // Smooth scroll to the dashboard after logging in
+            document.getElementById("dashboard").scrollIntoView({ behavior: "smooth" });
+        }
+
+        function logoutUser() {
+            isUserLoggedIn = false;
+            localStorage.removeItem("isLoggedIn");
+            localStorage.removeItem("userEmail");
+            syncUI();
+        }
+
+        function handleMealSubmit(e) {
+            e.preventDefault();
+            const type = document.getElementById("mealTypeSelect").value;
+            const item = document.getElementById("mealInput").value;
+
+            const list = document.getElementById("mealListContainer");
+            const li = document.createElement("li");
+            li.innerHTML = `<span>${item}</span> <small>${type}</small>`;
+            list.prepend(li);
+
+            document.getElementById("mealInput").value = "";
+        }
+
+        // Initialize state on first render
+        document.addEventListener("DOMContentLoaded", syncUI);
+    </script>
 </body>
 </html>
