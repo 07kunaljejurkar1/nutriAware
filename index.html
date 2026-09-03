@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>nutriAware - Smart Nutrition Awareness Platform</title>
+    
+    <!-- PWA & Mobile Meta Tags -->
+    <meta name="theme-color" content="#2e7d32">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="nutriAware">
+
+    <!-- Inline Web App Manifest (for installation as app) -->
+    <link rel="manifest" href="data:application/manifest+json;utf-8,%7B%22name%22%3A%22nutriAware%20-%20Student%20Nutrition%22%2C%22short_name%22%3A%22nutriAware%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f8fafc%22%2C%22theme_color%22%3A%22%232e7d32%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22https%3A%2F%2Fcdn-icons-png.flaticon.com%2F512%2F2921%2F2921822.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%7D%5D%7D">
+
     <style>
         :root {
             --primary: #2e7d32;
@@ -98,7 +108,10 @@
 
         .sidebar-footer {
             border-top: 1px solid var(--border);
-            padding-top: 1rem;
+            padding-top: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         /* ---------------- MAIN CONTENT & SLIDE DISPLAY ---------------- */
@@ -156,12 +169,24 @@
             background: var(--primary-hover);
         }
 
+        .btn-install {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: none; /* Shown when PWA install prompt is triggered */
+        }
+
         .btn-sm {
             padding: 0.35rem 0.75rem;
             font-size: 0.85rem;
         }
 
-        /* Hero Slide */
+        /* Hero Banner */
         .hero-banner {
             display: flex;
             align-items: center;
@@ -178,7 +203,7 @@
             margin-bottom: 0.8rem;
         }
 
-        /* Standard Cards Grid */
+        /* Card Grids */
         .card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -280,17 +305,17 @@
             font-size: 0.9rem;
         }
 
-        /* ---------------- AI RECIPE CHATBOX FULL VIEW ---------------- */
+        /* ---------------- AI RECIPE CHATBOX CONTAINER ---------------- */
         .ai-chat-slide-container {
-            max-width: 800px;
+            max-width: 820px;
             margin: 0 auto;
             background: white;
-            border-radius: 12px;
+            border-radius: 14px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.06);
             display: flex;
             flex-direction: column;
-            height: 600px;
+            height: 650px;
             overflow: hidden;
         }
 
@@ -299,8 +324,31 @@
             color: white;
             padding: 1rem 1.5rem;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .suggestions-bar {
+            display: flex;
             align-items: center;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-chip {
+            background: rgba(255,255,255,0.22);
+            color: white;
+            border: none;
+            border-radius: 14px;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .suggestion-chip:hover {
+            background: rgba(255,255,255,0.4);
         }
 
         .ai-chat-body {
@@ -331,28 +379,6 @@
             background: var(--primary);
             color: white;
             align-self: flex-end;
-        }
-
-        .quick-chips {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.6rem;
-        }
-
-        .chip-btn {
-            background: #e2e8f0;
-            border: none;
-            border-radius: 12px;
-            padding: 0.3rem 0.75rem;
-            font-size: 0.8rem;
-            cursor: pointer;
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        .chip-btn:hover {
-            background: #cbd5e1;
         }
 
         .ai-chat-footer {
@@ -442,23 +468,58 @@
             margin: 0.4rem 0 0.8rem 0;
         }
 
-        /* ---------------- ANALYTICS ---------------- */
-        .analytics-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+        /* ---------------- QUIZ SYSTEM ---------------- */
+        .quiz-container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
         }
 
-        .macro-row {
-            margin: 1rem 0;
-        }
-
-        .macro-row-header {
+        .quiz-header {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .quiz-option-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: #f8fafc;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 0.8rem 1rem;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .quiz-option-btn:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .quiz-option-btn.correct {
+            background: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #15803d;
             font-weight: 600;
-            margin-bottom: 4px;
+        }
+
+        .quiz-option-btn.wrong {
+            background: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #b91c1c;
+            font-weight: 600;
         }
 
         /* Modal */
@@ -529,12 +590,12 @@
                 <span>nutriAware</span>
             </div>
             <div class="sidebar-links">
-                <!-- Clickable Tabs to switch slides -->
                 <button class="nav-tab active" onclick="switchSlide('home')"><span>🏠</span> <span>Home</span></button>
                 <button class="nav-tab" id="dashNavTab" onclick="switchSlide('dashboard')" style="display: none;"><span>📊</span> <span>Dashboard</span></button>
                 <button class="nav-tab" onclick="switchSlide('ai-chatbox')"><span>🤖</span> <span>AI Chatbox</span></button>
                 <button class="nav-tab" onclick="switchSlide('ai-scanner')"><span>📸</span> <span>AI Scanner</span></button>
                 <button class="nav-tab" onclick="switchSlide('diet-recipes')"><span>🥗</span> <span>Diet Recipes</span></button>
+                <button class="nav-tab" onclick="switchSlide('quiz')"><span>📝</span> <span>Nutrition Quiz (50)</span></button>
                 <button class="nav-tab" onclick="switchSlide('water-tracker')"><span>💧</span> <span>Water Tracker</span></button>
                 <button class="nav-tab" onclick="switchSlide('analytics')"><span>📈</span> <span>Analytics</span></button>
                 <button class="nav-tab" onclick="switchSlide('nutrition')"><span>🔬</span> <span>Nutrition</span></button>
@@ -544,13 +605,14 @@
         </div>
 
         <div class="sidebar-footer">
+            <button id="installAppBtn" class="btn-install" onclick="triggerPWAInstall()">📲 Install App</button>
             <button id="authBtn" class="btn-primary" style="width: 100%;" onclick="toggleAuthModal()">
                 <span>Login</span>
             </button>
         </div>
     </aside>
 
-    <!-- 2. MAIN VIEW AREA (SHOWS INDIVIDUAL SLIDES) -->
+    <!-- 2. MAIN SLIDE CONTENT -->
     <main class="main-content">
 
         <!-- SLIDE 1: HOME -->
@@ -559,7 +621,7 @@
                 <div>
                     <h1>Eat Smart.<br>Live Healthy.</h1>
                     <p style="font-size: 1.15rem; color: var(--text-dark); margin-bottom: 1.4rem; max-width: 500px;">
-                        A smart nutrition platform helping college students scan campus food, track hydration, explore 60+ recipes, and consult NutriBot AI.
+                        A progressive nutrition awareness platform for college dining halls. Includes 60+ diet recipes, 50-question interactive quiz, and food AI scanning.
                     </p>
                     <button class="btn-primary" onclick="switchSlide('ai-chatbox')">Open AI Chatbox →</button>
                 </div>
@@ -568,14 +630,19 @@
 
             <div style="margin-top: 3rem;">
                 <div class="section-title">
-                    <h2>Platform Features</h2>
+                    <h2>Key Platform Modules</h2>
                     <p>Select any tool from the sidebar to begin.</p>
                 </div>
                 <div class="card-grid">
                     <div class="card" onclick="switchSlide('ai-chatbox')" style="cursor: pointer;">
                         <div class="card-icon">🤖</div>
-                        <h3>AI Recipe Chatbox</h3>
-                        <p>Instant guidance on 60+ student and hostel meals.</p>
+                        <h3>AI Recipe Chat</h3>
+                        <p>60+ verified recipes with instant ingredients & methods.</p>
+                    </div>
+                    <div class="card" onclick="switchSlide('quiz')" style="cursor: pointer;">
+                        <div class="card-icon">📝</div>
+                        <h3>50 Nutrition Quizzes</h3>
+                        <p>Test your knowledge on nutrients, hydration, and food labels.</p>
                     </div>
                     <div class="card" onclick="switchSlide('ai-scanner')" style="cursor: pointer;">
                         <div class="card-icon">📸</div>
@@ -585,12 +652,7 @@
                     <div class="card" onclick="switchSlide('water-tracker')" style="cursor: pointer;">
                         <div class="card-icon">💧</div>
                         <h3>Hydration Tracker</h3>
-                        <p>Track daily water goal to stay focused in class.</p>
-                    </div>
-                    <div class="card" onclick="switchSlide('diet-recipes')" style="cursor: pointer;">
-                        <div class="card-icon">🥗</div>
-                        <h3>Diet Recipes</h3>
-                        <p>Browse healthy meals across all meal categories.</p>
+                        <p>Track your daily water goal to stay focused in lectures.</p>
                     </div>
                 </div>
             </div>
@@ -600,7 +662,7 @@
         <div id="slide-dashboard" class="slide-view">
             <div class="section-title" style="text-align: left; margin-bottom: 1.5rem;">
                 <h2>👋 Welcome, <span id="studentDisplayName">Student</span></h2>
-                <p>Track calories, hydration progress, and view canteen swaps.</p>
+                <p>Track daily calories, hydration progress, and view canteen swaps.</p>
             </div>
 
             <div class="stats-grid">
@@ -617,7 +679,7 @@
                 <div class="stat-card">
                     <h4>Diet Quality</h4>
                     <div class="stat-value" style="color: #16a34a;">B+ (Good)</div>
-                    <small style="color: var(--text-muted);">High protein, good fiber</small>
+                    <small style="color: var(--text-muted);">High protein, balanced fiber</small>
                 </div>
             </div>
 
@@ -652,31 +714,37 @@
             </div>
         </div>
 
-        <!-- SLIDE 3: AI CHATBOX -->
+        <!-- SLIDE 3: AI CHATBOX WITH 6 SUGGESTIONS & 60 RECIPES -->
         <div id="slide-ai-chatbox" class="slide-view">
             <div class="section-title">
                 <h2>🤖 NutriBot AI Recipe Assistant</h2>
-                <p>Ask anything about healthy eating or choose from 60+ recipes!</p>
+                <p>Equipped with 60 healthy hostel, mess, and student recipes.</p>
             </div>
 
             <div class="ai-chat-slide-container">
                 <div class="ai-chat-header">
-                    <h3 style="font-size: 1.1rem;">NutriBot Assistant</h3>
-                    <span style="font-size: 0.75rem; background: rgba(255,255,255,0.2); padding: 3px 8px; border-radius: 10px;">60+ Recipes Active</span>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="font-size: 1.05rem;">NutriBot Assistant</h3>
+                        <span style="font-size: 0.75rem; background: rgba(255,255,255,0.25); padding: 3px 8px; border-radius: 10px;">60 Recipes Ready</span>
+                    </div>
+                    <!-- 6 Direct Recipe Name Suggestions -->
+                    <div class="suggestions-bar">
+                        <span style="font-size: 0.78rem; opacity: 0.9;">Try:</span>
+                        <button class="suggestion-chip" onclick="askSpecificRecipe('Vegetable Poha')">🍲 Poha</button>
+                        <button class="suggestion-chip" onclick="askSpecificRecipe('Besan Chilla')">🥞 Besan Chilla</button>
+                        <button class="suggestion-chip" onclick="askSpecificRecipe('High-Protein Mess Dal Khichdi')">🍚 Dal Khichdi</button>
+                        <button class="suggestion-chip" onclick="askSpecificRecipe('Sprouts Bhel')">🥗 Sprouts Bhel</button>
+                        <button class="suggestion-chip" onclick="askSpecificRecipe('Sattu Protein Cooler')">🥤 Sattu Cooler</button>
+                        <button class="suggestion-chip" onclick="askSpecificRecipe('Scrambled Eggs (Egg Bhurji)')">🍳 Egg Bhurji</button>
+                    </div>
                 </div>
                 <div class="ai-chat-body" id="chatBody">
                     <div class="chat-bubble bot">
-                        Hello! I am your AI Recipe Assistant. Ask me for quick recipes suitable for hostel rooms, mess food, or student budgets!
-                        <div class="quick-chips">
-                            <button class="chip-btn" onclick="quickAsk('Breakfast')">🍳 Breakfast</button>
-                            <button class="chip-btn" onclick="quickAsk('High Protein')">💪 High Protein</button>
-                            <button class="chip-btn" onclick="quickAsk('Hostel Snack')">⚡ Hostel Snacks</button>
-                            <button class="chip-btn" onclick="quickAsk('Drinks')">🥤 Healthy Drinks</button>
-                        </div>
+                        Hello! I am your AI Recipe Assistant with 60+ healthy recipes. Ask me how to make any dish, search by ingredient (e.g. <em>oats, paneer, eggs, chana</em>), or click any suggestion chip above!
                     </div>
                 </div>
                 <div class="ai-chat-footer">
-                    <input type="text" id="chatInput" placeholder="Ask for a recipe (e.g., Poha, Paneer, Oats)..." onkeydown="if(event.key==='Enter') sendChatMessage()">
+                    <input type="text" id="chatInput" placeholder="Ask for a recipe or ingredient..." onkeydown="if(event.key==='Enter') sendChatMessage()">
                     <button class="btn-primary" onclick="sendChatMessage()">Send</button>
                 </div>
             </div>
@@ -710,15 +778,15 @@
             </div>
         </div>
 
-        <!-- SLIDE 5: DIET RECIPES -->
+        <!-- SLIDE 5: DIET RECIPES BROWSER -->
         <div id="slide-diet-recipes" class="slide-view">
             <div class="section-title">
                 <h2>🥗 60+ Healthy Diet Recipes</h2>
-                <p>Nutritious and budget-friendly meals designed for college life.</p>
+                <p>Browse through all student-friendly recipes categorized by meals.</p>
             </div>
 
             <div class="recipe-filter">
-                <button class="filter-btn active" onclick="filterRecipeCategory('all')">All</button>
+                <button class="filter-btn active" onclick="filterRecipeCategory('all')">All (60)</button>
                 <button class="filter-btn" onclick="filterRecipeCategory('breakfast')">Breakfast</button>
                 <button class="filter-btn" onclick="filterRecipeCategory('lunch')">Lunch</button>
                 <button class="filter-btn" onclick="filterRecipeCategory('snack')">Snacks</button>
@@ -729,7 +797,32 @@
             <div class="recipe-grid" id="recipeContainer"></div>
         </div>
 
-        <!-- SLIDE 6: WATER TRACKER -->
+        <!-- SLIDE 6: 50 NUTRITION QUIZ QUESTIONS -->
+        <div id="slide-quiz" class="slide-view">
+            <div class="section-title">
+                <h2>📝 Student Nutrition Quiz</h2>
+                <p>50 comprehensive questions to test your healthy campus dining habits.</p>
+            </div>
+
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <span id="quizQuestionNumber">Question 1 of 50</span>
+                    <span>Score: <span id="quizScore">0</span></span>
+                </div>
+                <div class="progress-bar" style="margin-bottom: 1.5rem;">
+                    <div id="quizProgressFill" class="progress-fill" style="width: 2%;"></div>
+                </div>
+
+                <h3 id="quizQuestionText" style="margin-bottom: 1.2rem; font-size: 1.15rem; color: var(--text-dark);">Loading question...</h3>
+                <div id="quizOptionsContainer"></div>
+
+                <div id="quizFeedback" style="display: none; margin-top: 1rem; padding: 0.8rem; border-radius: 8px; font-weight: 600;"></div>
+
+                <button id="quizNextBtn" class="btn-primary" style="margin-top: 1.2rem; width: 100%; display: none;" onclick="nextQuizQuestion()">Next Question →</button>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: WATER TRACKER -->
         <div id="slide-water-tracker" class="slide-view">
             <div class="section-title">
                 <h2>💧 Daily Hydration Tracker</h2>
@@ -751,7 +844,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 7: ANALYTICS -->
+        <!-- SLIDE 8: ANALYTICS -->
         <div id="slide-analytics" class="slide-view">
             <div class="section-title">
                 <h2>📈 Nutrition & Health Analytics</h2>
@@ -786,7 +879,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 8: NUTRITION -->
+        <!-- SLIDE 9: NUTRITION -->
         <div id="slide-nutrition" class="slide-view">
             <div class="section-title">
                 <h2>Essential Nutrients</h2>
@@ -800,7 +893,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 9: HEALTHY FOOD -->
+        <!-- SLIDE 10: HEALTHY FOOD -->
         <div id="slide-healthy" class="slide-view">
             <div class="section-title">
                 <h2>Healthy Food Awareness</h2>
@@ -814,7 +907,7 @@
             </div>
         </div>
 
-        <!-- SLIDE 10: MEALS -->
+        <!-- SLIDE 11: MEALS -->
         <div id="slide-meals" class="slide-view">
             <div class="section-title">
                 <h2>Balanced Meal Combinations</h2>
@@ -849,30 +942,174 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT LOGIC -->
+    <!-- ---------------- JAVASCRIPT: 60 RECIPES + 50 QUIZZES + PWA ---------------- -->
     <script>
+        // ---------------- 60 VERIFIED RECIPES DATABASE ----------------
         const RECIPE_DB = [
-            { name: "Vegetable Poha", category: "breakfast", time: "10m", cal: "180 kcal", ingredients: "Poha, peanuts, mustard seeds, turmeric, lemon", prep: "Wash poha. Sauté peanuts & onions, add turmeric, fold poha, finish with lemon." },
-            { name: "Moong Sprout Salad", category: "breakfast", time: "5m", cal: "140 kcal", ingredients: "Sprouted moong, cucumber, tomato, chaat masala, lemon", prep: "Toss raw sprouts with diced cucumber, tomatoes, and lemon." },
-            { name: "Masala Oats", category: "breakfast", time: "8m", cal: "190 kcal", ingredients: "Rolled oats, tomato, onion, green chili, turmeric", prep: "Sauté veg, add water, stir oats for 3 minutes until thick." },
+            // Breakfast (1-12)
+            { name: "Vegetable Poha", category: "breakfast", time: "10m", cal: "180 kcal", ingredients: "Flattened rice (poha), peanuts, mustard seeds, turmeric, lemon", prep: "Wash poha. Sauté peanuts & onions, add turmeric, fold poha, finish with lemon juice." },
+            { name: "Moong Sprout Salad", category: "breakfast", time: "5m", cal: "140 kcal", ingredients: "Sprouted green moong, cucumber, tomato, chaat masala, lemon", prep: "Toss raw or steamed sprouts with diced cucumber, tomatoes, and fresh lemon." },
+            { name: "Masala Oats", category: "breakfast", time: "8m", cal: "190 kcal", ingredients: "Rolled oats, tomato, onion, green chili, turmeric", prep: "Sauté veg, add water, stir in oats for 3 minutes until thick and savory." },
             { name: "Paneer Bhurji & Roti", category: "breakfast", time: "12m", cal: "260 kcal", ingredients: "Crumbled paneer, tomato, chillies, coriander", prep: "Sauté tomatoes and chillies, add crumbled paneer, cook 3 mins." },
-            { name: "Besan Chilla", category: "breakfast", time: "10m", cal: "170 kcal", ingredients: "Gram flour (besan), ajwain, chopped onion", prep: "Mix batter with water. Cook like pancake on non-stick pan." },
+            { name: "Besan Chilla", category: "breakfast", time: "10m", cal: "170 kcal", ingredients: "Gram flour (besan), ajwain, chopped onion, coriander", prep: "Mix besan with water into a batter. Cook like a crepe on a non-stick pan." },
             { name: "Boiled Eggs with Pepper", category: "breakfast", time: "10m", cal: "155 kcal", ingredients: "2 whole eggs, black pepper, pinch of salt", prep: "Hard boil eggs for 9 mins. Peel, halve, season with black pepper." },
-            { name: "High-Protein Mess Dal Khichdi", category: "lunch", time: "15m", cal: "310 kcal", ingredients: "Yellow moong dal, rice, cumin, spinach", prep: "Cook equal parts dal and rice with turmeric and cumin." },
+            { name: "Peanut Butter Banana Toast", category: "breakfast", time: "3m", cal: "230 kcal", ingredients: "Whole wheat bread, peanut butter, banana", prep: "Toast bread slice, spread peanut butter, top with sliced banana." },
+            { name: "Dahi & Puffed Rice (Murmura)", category: "breakfast", time: "2m", cal: "160 kcal", ingredients: "1 cup curd, murmura, roasted cumin powder", prep: "Mix fresh curd with murmura and roasted cumin for an instant gut-friendly breakfast." },
+            { name: "Vegetable Upma", category: "breakfast", time: "12m", cal: "210 kcal", ingredients: "Semolina (suji), mustard seeds, carrots, peas", prep: "Roast suji. Sauté veggies and mustard, add hot water, stir suji gradually." },
+            { name: "Scrambled Eggs (Egg Bhurji)", category: "breakfast", time: "7m", cal: "190 kcal", ingredients: "2 eggs, onions, green chillies, coriander", prep: "Whisk eggs. Sauté onions in pan, add eggs and scramble till done." },
+            { name: "Suji Idli & Coconut Chutney", category: "breakfast", time: "15m", cal: "160 kcal", ingredients: "Suji, curd, eno, mustard seeds", prep: "Mix suji and curd, steam in idli stand for 10 minutes." },
+            { name: "Ragi (Finger Millet) Porridge", category: "breakfast", time: "8m", cal: "150 kcal", ingredients: "Ragi flour, water/milk, pinch of cardamom, jaggery", prep: "Whisk ragi flour in water to avoid lumps, cook on low flame until glossy." },
+
+            // Lunch (13-25)
+            { name: "High-Protein Mess Dal Khichdi", category: "lunch", time: "15m", cal: "310 kcal", ingredients: "Yellow moong dal, rice, cumin, spinach", prep: "Cook equal parts dal and rice with turmeric and cumin until soft." },
             { name: "Soya Chunks Pulao", category: "lunch", time: "15m", cal: "330 kcal", ingredients: "Boiled soya chunks, rice, onion, garam masala", prep: "Sauté boiled soya chunks with onion and cooked rice." },
-            { name: "Chickpea Rice Bowl", category: "lunch", time: "10m", cal: "320 kcal", ingredients: "Boiled chana, rice, cucumber, mint curd", prep: "Layer warm rice with seasoned chana and curd." },
+            { name: "Chickpea Rice Bowl", category: "lunch", time: "10m", cal: "320 kcal", ingredients: "Boiled chana, rice, cucumber, mint curd", prep: "Layer warm rice with seasoned chana and cool mint curd." },
+            { name: "Rajma Roti Wrap", category: "lunch", time: "5m", cal: "280 kcal", ingredients: "Thick mess rajma, 1 roti, onion slices, lemon", prep: "Wrap drained thick rajma in whole wheat roti with raw onion." },
+            { name: "Simple Palak Paneer", category: "lunch", time: "15m", cal: "250 kcal", ingredients: "Blanched spinach puree, paneer cubes, garlic", prep: "Simmer pureed spinach with garlic, toss in paneer cubes." },
+            { name: "Curd Rice with Grated Cucumber", category: "lunch", time: "5m", cal: "240 kcal", ingredients: "Mess rice, curd, grated cucumber, mustard seeds", prep: "Mash cooked rice with curd, fold in cucumber, temper with mustard." },
+            { name: "Hostel Egg Curry", category: "lunch", time: "15m", cal: "270 kcal", ingredients: "2 boiled eggs, onion-tomato gravy, turmeric, coriander", prep: "Sauté onion-tomato base with spices, add halved eggs, simmer 5 mins." },
+            { name: "Moong Dal Stuffed Cheela", category: "lunch", time: "12m", cal: "290 kcal", ingredients: "Yellow moong batter, grated paneer filling", prep: "Spread batter thin on pan, add paneer filling, fold like a wrap." },
+            { name: "Lauki Chana Dal", category: "lunch", time: "20m", cal: "220 kcal", ingredients: "Chana dal, chopped bottle gourd (lauki), cumin", prep: "Pressure cook lauki with chana dal, temper with cumin and hing." },
+            { name: "Paneer / Tofu Bell Pepper Stir-Fry", category: "lunch", time: "10m", cal: "210 kcal", ingredients: "Paneer/Tofu cubes, capsicum, onion, black pepper", prep: "Sauté bell peppers and paneer in 1 tsp oil on high heat for 5 mins." },
+            { name: "Fresh Veggie Roti Roll", category: "lunch", time: "6m", cal: "200 kcal", ingredients: "Roti, shredded cabbage, carrot, green chutney", prep: "Spread green chutney on roti, layer crunchy veggies, roll tightly." },
+            { name: "Black Chana Curry", category: "lunch", time: "20m", cal: "260 kcal", ingredients: "Kala chana, ginger, tomato, coriander powder", prep: "Boil kala chana with ginger and tomato paste for iron-rich fuel." },
+            { name: "Curd & Boiled Potato Salad", category: "lunch", time: "5m", cal: "190 kcal", ingredients: "Boiled potato cubed, curd, rock salt, roasted jeera", prep: "Toss potato cubes into seasoned curd for an easy cool lunch." },
+
+            // Snacks (26-38)
             { name: "Roasted Makhana", category: "snack", time: "4m", cal: "110 kcal", ingredients: "Foxnuts, 1/2 tsp ghee, turmeric, rock salt", prep: "Dry roast makhana with drop of ghee until crunchy." },
             { name: "Kala Chana Chaat", category: "snack", time: "4m", cal: "150 kcal", ingredients: "Boiled black chickpeas, tomato, onion, lemon", prep: "Mix boiled chana with chopped raw onion, tomato, and lemon." },
+            { name: "Sprouts Bhel", category: "snack", time: "4m", cal: "140 kcal", ingredients: "Sprouted moong, murmura, lemon, green chutney", prep: "Mix murmura and sprouts with lemon and green chili chutney." },
+            { name: "Peanut Salad Chaat", category: "snack", time: "3m", cal: "190 kcal", ingredients: "Roasted peanuts, onion, tomato, lemon", prep: "Toss peanuts with salad toppings and lemon for instant protein." },
+            { name: "Bhuna Chana & Gur (Jaggery)", category: "snack", time: "1m", cal: "160 kcal", ingredients: "Roasted black chana, jaggery piece", prep: "Classic stamina booster rich in plant protein and bioavailable iron." },
+            { name: "Steamed Sweet Corn Bowl", category: "snack", time: "5m", cal: "130 kcal", ingredients: "Sweet corn, pinch of butter, black pepper, lime", prep: "Steam corn in kettle or microwave, toss with pepper and lime." },
+            { name: "Fresh Fruit Chaat", category: "snack", time: "5m", cal: "120 kcal", ingredients: "Apple, banana, guava, chaat masala", prep: "Dice seasonal fruits and sprinkle with chaat masala." },
+            { name: "Crispy Masala Murmura", category: "snack", time: "3m", cal: "95 kcal", ingredients: "Puffed rice, roasted peanuts, turmeric, salt", prep: "Dry roast murmura with roasted peanuts for a low-calorie crunch." },
+            { name: "Cucumber Boats with Paneer", category: "snack", time: "4m", cal: "110 kcal", ingredients: "Cucumber, crumbled paneer, black pepper", prep: "Hollow out cucumber center, stuff with crumbled paneer and pepper." },
+            { name: "Hard Boiled Egg Whites (3 pcs)", category: "snack", time: "8m", cal: "50 kcal", ingredients: "3 egg whites, chaat masala", prep: "Peel boiled eggs, discard yolks, sprinkle whites with chaat masala." },
+            { name: "Tomato Paneer Toothpicks", category: "snack", time: "3m", cal: "140 kcal", ingredients: "Raw paneer cubes, cherry tomatoes, oregano", prep: "Spear paneer cubes and tomatoes on toothpicks with oregano." },
+            { name: "Roasted Soyabean Crunch", category: "snack", time: "1m", cal: "170 kcal", ingredients: "Roasted soya seeds, lime juice", prep: "Super high protein snack. Eat with a dash of lime." },
+            { name: "Toast with Hung Curd Dip", category: "snack", time: "4m", cal: "150 kcal", ingredients: "1 slice toast, hung curd, garlic, herbs", prep: "Use thick hung curd as a clean mayo replacement on crisp toast." },
+
+            // Dinner (39-50)
             { name: "Moong Dal Soup", category: "dinner", time: "12m", cal: "160 kcal", ingredients: "Yellow moong dal, ginger, cumin, lemon", prep: "Cook dal thin with ginger, blend lightly, squeeze fresh lemon." },
             { name: "Oats Khichdi", category: "dinner", time: "10m", cal: "210 kcal", ingredients: "Rolled oats, peas, carrots, cumin, turmeric", prep: "Cook veggies in pan, add oats and 1.5 cups water; simmer." },
+            { name: "Steamed Idli with Mint Chutney", category: "dinner", time: "10m", cal: "170 kcal", ingredients: "2 idlis, mint-coriander chutney", prep: "Light, easily digestible dinner that prevents acid reflux before sleep." },
+            { name: "Clear Vegetable Soup", category: "dinner", time: "10m", cal: "85 kcal", ingredients: "Cabbage, carrot, beans, black pepper", prep: "Boil finely chopped vegetables with water, salt, and black pepper." },
+            { name: "Boiled Soya Chunks Salad", category: "dinner", time: "7m", cal: "180 kcal", ingredients: "Boiled soya chunks, tomato, cucumber, mint, lemon", prep: "Quarter boiled soya chunks, toss with salad veggies and herbs." },
+            { name: "Egg White Bhurji & 1 Roti", category: "dinner", time: "10m", cal: "190 kcal", ingredients: "3 egg whites, 1 whole egg, onion, 1 roti", prep: "Scramble whites with onion and spices; eat with a single whole wheat roti." },
+            { name: "Daliya (Broken Wheat) Khichdi", category: "dinner", time: "15m", cal: "230 kcal", ingredients: "Roasted daliya, moong dal, carrots, cumin", prep: "Cook broken wheat and dal together with vegetables for high dietary fiber." },
+            { name: "Stir-Fried Paneer & Broccoli", category: "dinner", time: "8m", cal: "200 kcal", ingredients: "Broccoli florets, paneer cubes, black pepper, garlic", prep: "Flash fry in a pan with 1/2 tsp oil until broccoli is tender-crisp." },
+            { name: "Tomato & Carrot Soup", category: "dinner", time: "12m", cal: "95 kcal", ingredients: "Tomatoes, 1 carrot, ginger, black pepper", prep: "Boil and blend tomatoes and carrot; simmer with pepper and ginger." },
+            { name: "Masala Sprout Wrap", category: "dinner", time: "6m", cal: "210 kcal", ingredients: "Steamed sprouts, 1 roti, coriander chutney", prep: "Warm sprouts in pan with cumin, roll inside a soft roti." },
+            { name: "Cottage Cheese & Spinach Sauté", category: "dinner", time: "10m", cal: "220 kcal", ingredients: "Spinach leaves, paneer cubes, minced garlic", prep: "Wilt spinach with garlic in pan, toss paneer cubes in for 2 minutes." },
+            { name: "Pumpkin (Kaddu) Sabzi & Phulka", category: "dinner", time: "15m", cal: "180 kcal", ingredients: "Yellow pumpkin, methi seeds, amchur, roti", prep: "Cook pumpkin cubes with fenugreek seeds; low-calorie digestive meal." },
+
+            // Drinks & Shakes (51-60)
             { name: "Mint Chaas", category: "drinks", time: "2m", cal: "45 kcal", ingredients: "1/2 cup curd, 1 cup cold water, roasted jeera, mint", prep: "Blend curd and water with mint and roasted cumin." },
-            { name: "Sattu Protein Cooler", category: "drinks", time: "2m", cal: "140 kcal", ingredients: "2 tbsp sattu, water, lemon, black salt", prep: "Stir sattu powder into cold water with lemon and black salt." }
+            { name: "Sattu Protein Cooler", category: "drinks", time: "2m", cal: "140 kcal", ingredients: "2 tbsp sattu, water, lemon, black salt", prep: "Stir sattu powder into cold water with lemon and black salt." },
+            { name: "Banana Oatmeal Smoothie", category: "drinks", time: "4m", cal: "240 kcal", ingredients: "1 banana, 2 tbsp oats, 1 cup milk, cinnamon", prep: "Blend ingredients till smooth for quick sustained energy." },
+            { name: "Lemon Mint Chia Water", category: "drinks", time: "3m", cal: "40 kcal", ingredients: "1 tsp soaked chia seeds, lemon juice, water, mint", prep: "Stir soaked chia into chilled lemon water for fiber and hydration." },
+            { name: "Turmeric Milk (Haldi Doodh)", category: "drinks", time: "5m", cal: "130 kcal", ingredients: "Warm milk, turmeric, black pepper", prep: "Warm milk with turmeric and pepper before bed to reduce muscle soreness." },
+            { name: "Cucumber Mint Cooler", category: "drinks", time: "3m", cal: "35 kcal", ingredients: "Cucumber, mint leaves, lemon juice, black salt", prep: "Blend and strain cucumber with mint and lemon for pure hydration." },
+            { name: "Cold Coffee with Skimmed Milk", category: "drinks", time: "3m", cal: "90 kcal", ingredients: "Chilled milk, 1 tsp instant coffee, 1 date", prep: "Blend chilled milk with coffee and a date without refined white sugar." },
+            { name: "Ginger Cinnamon Tea", category: "drinks", time: "5m", cal: "10 kcal", ingredients: "Crushed ginger, small cinnamon stick, water", prep: "Boil ginger and cinnamon in water for 5 mins; drink warm for digestion." },
+            { name: "Peanut Butter Shake", category: "drinks", time: "3m", cal: "280 kcal", ingredients: "1 cup milk, 1 tbsp peanut butter, 1 banana", prep: "Blend for a healthy mass-building student shake." },
+            { name: "Coconut Water with Lime", category: "drinks", time: "1m", cal: "45 kcal", ingredients: "Fresh coconut water, squeeze of lime", prep: "Natural electrolytes that beat fatigue in hot college weather." }
         ];
 
+        // ---------------- 50 NUTRITION QUIZ QUESTIONS ----------------
+        const QUIZ_QUESTIONS = [
+            { q: "Which nutrient is the body's primary and fastest source of energy for brain work?", opts: ["Carbohydrates", "Fats", "Vitamins", "Minerals"], ans: 0 },
+            { q: "What is the recommended average daily water intake for most college students?", opts: ["1 Liter", "2.5 to 3 Liters", "5 Liters", "500 ml"], ans: 1 },
+            { q: "Which of the following mess items is richest in protein?", opts: ["White Rice", "Boiled Egg / Soya Chunks", "Potato Chips", "Papad"], ans: 1 },
+            { q: "Why should deep-fried foods like samosas be limited during exam periods?", opts: ["They induce post-meal sluggishness and brain fog", "They have too many vitamins", "They enhance memory too fast", "They cool down the stomach"], ans: 0 },
+            { q: "What does 'Dietary Fiber' mainly assist with?", opts: ["Muscle hypertrophy", "Digestion and steady blood sugar", "Quick sugar spikes", "Hair coloring"], ans: 1 },
+            { q: "Which vitamin is synthesized naturally when skin is exposed to morning sunlight?", opts: ["Vitamin C", "Vitamin D", "Vitamin B12", "Vitamin K"], ans: 1 },
+            { q: "Which of these is a smarter alternative to a carbonated sugary soda in the canteen?", opts: ["Chaas (Buttermilk)", "Energy Drink", "Packaged Fruit Juice", "Flavored Soda"], ans: 0 },
+            { q: "What nutrient builds, maintains, and repairs muscle tissues?", opts: ["Protein", "Carbohydrates", "Cholesterol", "Simple Sugar"], ans: 0 },
+            { q: "On a packaged food label, how are ingredients listed in the ingredient list?", opts: ["Alphabetically", "Descending order of weight (highest amount first)", "Random order", "By price"], ans: 1 },
+            { q: "Which cooking medium contains high saturated/trans fats often reused in street snacks?", opts: ["Boiled water", "Repeatedly reheated commercial oil", "Cold pressed olive oil", "Lemon juice"], ans: 1 },
+            { q: "Which mineral is essential for carrying oxygen in blood and preventing anemia?", opts: ["Iron", "Sodium", "Zinc", "Potassium"], ans: 0 },
+            { q: "What is the ideal proportion of vegetables/salad in a balanced meal plate?", opts: ["None", "Roughly 50% (half the plate)", "5%", "100% strictly"], ans: 1 },
+            { q: "Skipping breakfast regularly often leads to:", opts: ["Better focus", "Energy crashes and late-night binge eating", "Faster muscle growth", "Higher hydration"], ans: 1 },
+            { q: "Which food is high in good gut bacteria (probiotics)?", opts: ["Curd / Dahi", "Biscuits", "French Fries", "White Bread"], ans: 0 },
+            { q: "Which food contains heart-healthy Omega-3 fats?", opts: ["Walnuts & Flaxseeds", "Margarine", "Samosa", "Soft drinks"], ans: 0 },
+            { q: "What does BMI stand for?", opts: ["Basic Metabolic Indicator", "Body Mass Index", "Body Muscle Intake", "Balanced Meal Index"], ans: 1 },
+            { q: "Which is a good complex carbohydrate source commonly found in messes?", opts: ["Whole wheat Roti", "Refined Maida Cake", "Cotton Candy", "Sugar Syrup"], ans: 0 },
+            { q: "What is the primary risk of drinking inadequate water throughout the day?", opts: ["Dehydration, headaches, and low concentration", "Rapid weight loss", "Enhanced memory", "Better skin glow"], ans: 0 },
+            { q: "Which fruit provides an instant, portable boost of potassium and energy before sports?", opts: ["Banana", "Watermelon rind", "Dried clove", "Raw lemon peel"], ans: 0 },
+            { q: "What is 'Hidden Sugar' on food labels often disguised as?", opts: ["High Fructose Corn Syrup / Maltose", "Cellulose", "Dietary Fiber", "Ascorbic Acid"], ans: 0 },
+            { q: "Which of these seeds is packed with fiber and omega fats when soaked in water?", opts: ["Chia / Sabja seeds", "Mustard seeds", "Apple seeds", "Mango seed"], ans: 0 },
+            { q: "Why is whole fruit better than packaged fruit juice?", opts: ["Contains natural dietary fiber and no added preservatives", "Fruit juice has zero calories", "Packaged juice is completely unprocessed", "Whole fruits have no vitamins"], ans: 0 },
+            { q: "Which nutrient should you increase to remain satiated and avoid 4 PM canteen cravings?", opts: ["Protein & Fiber", "Refined Flour", "White Sugar", "Soda"], ans: 0 },
+            { q: "What is the primary role of Calcium in the body?", opts: ["Building strong bones and teeth", "Digesting simple sugars", "Producing adrenaline", "Fighting fever directly"], ans: 0 },
+            { q: "Eating late-night greasy dinners frequently causes:", opts: ["Acid reflux and poor sleep quality", "Instant deep sleep", "Faster muscle protein synthesis", "Better morning alertness"], ans: 0 },
+            { q: "Which of these snacks gives clean sustained energy during long study sessions?", opts: ["Roasted Makhana / Roasted Chana", "Instant Cream Wafers", "Potato Wafers", "Lollipops"], ans: 0 },
+            { q: "How many calories does 1 gram of protein provide?", opts: ["4 kcal", "9 kcal", "20 kcal", "0 kcal"], ans: 0 },
+            { q: "How many calories does 1 gram of fat provide?", opts: ["9 kcal", "4 kcal", "2 kcal", "15 kcal"], ans: 0 },
+            { q: "Which vitamin helps in the absorption of plant-based Iron?", opts: ["Vitamin C (e.g., Lemon)", "Vitamin K", "Vitamin D", "Vitamin B12"], ans: 0 },
+            { q: "What is an indicator that your daily hydration is optimal?", opts: ["Light pale-straw colored urine", "Dark amber colored urine", "Feeling constant dry mouth", "Frequent headaches"], ans: 0 },
+            { q: "Sattu is made from which nutritious pulse?", opts: ["Roasted Bengal Gram (Chana)", "Refined Wheat", "Raw Corn", "Soyabean Oil"], ans: 0 },
+            { q: "Which of the following is considered an 'empty calorie' food?", opts: ["Sugary carbonated soda", "Boiled egg", "Moong Dal", "Cucumber"], ans: 0 },
+            { q: "What is the benefit of including raw salads before a heavy lunch?", opts: ["Slows glucose spikes and improves satiety", "Destroys all stomach acid", "Adds saturated fat", "Reduces meal protein"], ans: 0 },
+            { q: "Which ingredient should students watch out for in instant noodles?", opts: ["High Sodium and Palm Oil", "Excess Vitamin C", "Too much water", "High Calcium"], ans: 0 },
+            { q: "Which of the following is a symptom of chronic mild dehydration?", opts: ["Fatigue, loss of focus, and sudden hunger cravings", "Extreme endurance", "Instant sleep", "Decreased heart rate"], ans: 0 },
+            { q: "Why are sprouts considered nutritional powerhouses?", opts: ["Germination increases enzyme activity and vitamin availability", "They are cooked in heavy ghee", "They contain no water", "They have 90% fats"], ans: 0 },
+            { q: "Which vegetable is famously rich in Beta-Carotene (Vitamin A precursor)?", opts: ["Carrot", "Potato", "Onion", "White radish"], ans: 0 },
+            { q: "Which lifestyle habit promotes better nutrient absorption and metabolic health?", opts: ["Regular 7-8 hours sleep", "Pulling all-nighters every day", "Eating once every 24 hours", "Drinking no water after meals"], ans: 0 },
+            { q: "What is the primary danger of consuming excess dietary sodium (salt)?", opts: ["High blood pressure and kidney strain", "Instant low blood sugar", "Severe vitamin D loss", "Hair discoloration"], ans: 0 },
+            { q: "Which legume provides both carbohydrates and plant protein in a mess thali?", opts: ["Toor / Moong Dal", "White sugar syrup", "Butter cube", "Refined rice starch"], ans: 0 },
+            { q: "What is the healthiest canteen snack choice among these?", opts: ["Sprouts Chaat / Boiled Eggs", "Puff Pastry / Samosa", "Chili Potato", "Packaged Chips"], ans: 0 },
+            { q: "Which electrolyte is abundant in natural coconut water?", opts: ["Potassium", "Refined Sugar", "Trans Fat", "Lead"], ans: 0 },
+            { q: "Why is water preferred over commercial energy drinks for casual studying?", opts: ["No artificial caffeine crashes or high sugar load", "Water costs 10x more", "Energy drinks improve teeth", "Water has excess calories"], ans: 0 },
+            { q: "What does 'SDG 3' established by the United Nations stand for?", opts: ["Good Health and Well-Being", "Space Exploration", "Free Food Delivery", "Automotive Research"], ans: 0 },
+            { q: "Which habit helps students prevent overeating in buffet-style messes?", opts: ["Chewing slowly and using standard portion plates", "Eating as fast as possible", "Scrolling reels while swallowing", "Skipping water"], ans: 0 },
+            { q: "Which of the following is a dairy-free high-protein food?", opts: ["Tofu / Soya Chunks", "Paneer", "Ghee", "Curd"], ans: 0 },
+            { q: "True or False: Fats should be completely eliminated from a healthy student diet.", opts: ["False - Healthy fats are essential for hormones and brain function", "True - Fats have zero biological use", "True - Fats prevent vitamin intake", "False - Only saturated trans fats are needed"], ans: 0 },
+            { q: "Which food combination represents a complete amino acid profile (protein)?", opts: ["Rice + Dal / Khichdi", "Rice + Sugar", "Bread + Butter", "Potato + Oil"], ans: 0 },
+            { q: "What is the best way to handle mid-study sugar cravings?", opts: ["Eat fresh fruit with a handful of nuts", "Drink a large soda", "Eat 2 chocolate bars", "Ignore eating for 12 hours"], ans: 0 },
+            { q: "Why should students learn to read nutrition facts labels on snacks?", opts: ["To make informed choices based on ingredients and serving sizes", "To memorize barcode numbers", "To check printer ink quality", "To calculate store profit"], ans: 0 }
+        ];
+
+        // ---------------- STATE VARIABLES ----------------
         let isUserLoggedIn = localStorage.getItem("isLoggedIn") === "true";
         let waterTotal = 1.25;
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let deferredPrompt;
 
-        // Slide Switcher Function
+        // ---------------- PWA INSTALLATION LOGIC ----------------
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            const installBtn = document.getElementById('installAppBtn');
+            if (installBtn) installBtn.style.display = 'block';
+        });
+
+        function triggerPWAInstall() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then((choiceResult) => {
+                    if (choiceResult.outcome === 'accepted') {
+                        document.getElementById('installAppBtn').style.display = 'none';
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                alert("To install nutriAware: Click your browser's menu (three dots at top right) and select 'Install nutriAware' or 'Add to Home Screen'!");
+            }
+        }
+
+        // Register dummy service worker for PWA criteria
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `self.addEventListener('fetch', function(e) {});`;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+            });
+        }
+
+        // ---------------- SLIDE SWITCHER ----------------
         function switchSlide(slideId) {
             document.querySelectorAll('.slide-view').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -888,7 +1125,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Recipes Renderer
+        // ---------------- RECIPES RENDERER ----------------
         function renderRecipes(category = "all") {
             const container = document.getElementById("recipeContainer");
             const list = (category === "all") ? RECIPE_DB : RECIPE_DB.filter(r => r.category === category);
@@ -911,9 +1148,9 @@
             renderRecipes(cat);
         }
 
-        // AI Chat Engine
-        function quickAsk(text) {
-            document.getElementById("chatInput").value = text;
+        // ---------------- AI CHATBOT ENGINE ----------------
+        function askSpecificRecipe(recipeName) {
+            document.getElementById("chatInput").value = recipeName;
             sendChatMessage();
         }
 
@@ -947,10 +1184,10 @@
             else if (query.includes("snack") || query.includes("hostel")) matched = RECIPE_DB.filter(r => r.category === "snack");
             else if (query.includes("dinner")) matched = RECIPE_DB.filter(r => r.category === "dinner");
             else if (query.includes("drink")) matched = RECIPE_DB.filter(r => r.category === "drinks");
-            else if (query.includes("protein")) matched = RECIPE_DB.filter(r => r.ingredients.includes("paneer") || r.ingredients.includes("egg") || r.ingredients.includes("soya"));
+            else if (query.includes("protein")) matched = RECIPE_DB.filter(r => r.ingredients.includes("paneer") || r.ingredients.includes("egg") || r.ingredients.includes("soya") || r.ingredients.includes("chana") || r.ingredients.includes("sattu"));
             else matched = RECIPE_DB.filter(r => r.name.toLowerCase().includes(query) || r.ingredients.toLowerCase().includes(query));
 
-            if (matched.length === 0) return `I couldn't find a recipe matching "${query}". Try typing <em>poha, oats, paneer, eggs,</em> or <em>breakfast</em>!`;
+            if (matched.length === 0) return `I couldn't find a direct recipe for "${query}". Try searching for <em>poha, oats, paneer, eggs, chana, khichdi,</em> or click the top suggestion chips!`;
 
             const selected = matched.slice(0, 2);
             let out = `Found <strong>${matched.length}</strong> matching recipe(s):<br>`;
@@ -963,17 +1200,108 @@
                     </div>
                 `;
             });
+            if (matched.length > 2) {
+                out += `<br><small style="color:var(--text-muted)">+ ${matched.length - 2} more options in database. View the 'Diet Recipes' tab for full list.</small>`;
+            }
             return out;
         }
 
-        // Scanner Simulation
+        // ---------------- 50 QUIZ SYSTEM LOGIC ----------------
+        function renderQuizQuestion() {
+            if (currentQuizIndex >= QUIZ_QUESTIONS.length) {
+                document.getElementById("quizQuestionNumber").textContent = "Quiz Completed! 🎉";
+                document.getElementById("quizQuestionText").innerHTML = `Awesome job! You scored <strong>${quizScore} out of 50</strong>.`;
+                document.getElementById("quizOptionsContainer").innerHTML = `
+                    <button class="btn-primary" style="width:100%; margin-top:1rem;" onclick="restartQuiz()">Restart Quiz</button>
+                `;
+                document.getElementById("quizFeedback").style.display = "none";
+                document.getElementById("quizNextBtn").style.display = "none";
+                return;
+            }
+
+            const cur = QUIZ_QUESTIONS[currentQuizIndex];
+            document.getElementById("quizQuestionNumber").textContent = `Question ${currentQuizIndex + 1} of ${QUIZ_QUESTIONS.length}`;
+            document.getElementById("quizScore").textContent = quizScore;
+            document.getElementById("quizProgressFill").style.width = `${((currentQuizIndex + 1) / QUIZ_QUESTIONS.length) * 100}%`;
+            document.getElementById("quizQuestionText").textContent = cur.q;
+
+            const optsContainer = document.getElementById("quizOptionsContainer");
+            optsContainer.innerHTML = "";
+            document.getElementById("quizFeedback").style.display = "none";
+            document.getElementById("quizNextBtn").style.display = "none";
+
+            cur.opts.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "quiz-option-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleQuizAnswer(idx, cur.ans);
+                optsContainer.appendChild(btn);
+            });
+        }
+
+        function handleQuizAnswer(selectedIdx, correctIdx) {
+            const allButtons = document.querySelectorAll(".quiz-option-btn");
+            allButtons.forEach(btn => btn.disabled = true);
+
+            const feedback = document.getElementById("quizFeedback");
+            feedback.style.display = "block";
+
+            if (selectedIdx === correctIdx) {
+                allButtons[selectedIdx].classList.add("correct");
+                feedback.style.background = "#dcfce7";
+                feedback.style.color = "#15803d";
+                feedback.textContent = "✅ Correct! Great nutrition awareness.";
+                quizScore++;
+                document.getElementById("quizScore").textContent = quizScore;
+            } else {
+                allButtons[selectedIdx].classList.add("wrong");
+                allButtons[correctIdx].classList.add("correct");
+                feedback.style.background = "#fee2e2";
+                feedback.style.color = "#b91c1c";
+                feedback.textContent = `❌ Not quite. Correct answer: ${QUIZ_QUESTIONS[currentQuizIndex].opts[correctIdx]}`;
+            }
+
+            document.getElementById("quizNextBtn").style.display = "block";
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIndex++;
+            renderQuizQuestion();
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            renderQuizQuestion();
+        }
+
+        // ---------------- SCANNER & HYDRATION & AUTH ----------------
         function simulateAIScan(e) {
             const res = document.getElementById("scannerResult");
             res.style.display = "block";
             res.scrollIntoView({ behavior: "smooth" });
         }
 
-        // Auth & Sync
+        function addWater() {
+            if (waterTotal < 3.5) {
+                waterTotal = parseFloat((waterTotal + 0.25).toFixed(2));
+                updateWaterDisplay();
+            }
+        }
+
+        function resetWater() {
+            waterTotal = 0.0;
+            updateWaterDisplay();
+        }
+
+        function updateWaterDisplay() {
+            const pct = Math.min((waterTotal / 2.5) * 100, 100);
+            document.getElementById("trackerWaterVal").textContent = waterTotal;
+            document.getElementById("trackerWaterFill").style.width = pct + "%";
+            document.getElementById("dashWaterCount").textContent = waterTotal;
+            document.getElementById("dashWaterFill").style.width = pct + "%";
+        }
+
         function syncUI() {
             const authBtn = document.getElementById("authBtn");
             const dashNavTab = document.getElementById("dashNavTab");
@@ -1018,27 +1346,6 @@
             switchSlide('home');
         }
 
-        // Water
-        function addWater() {
-            if (waterTotal < 3.5) {
-                waterTotal = parseFloat((waterTotal + 0.25).toFixed(2));
-                updateWaterDisplay();
-            }
-        }
-
-        function resetWater() {
-            waterTotal = 0.0;
-            updateWaterDisplay();
-        }
-
-        function updateWaterDisplay() {
-            const pct = Math.min((waterTotal / 2.5) * 100, 100);
-            document.getElementById("trackerWaterVal").textContent = waterTotal;
-            document.getElementById("trackerWaterFill").style.width = pct + "%";
-            document.getElementById("dashWaterCount").textContent = waterTotal;
-            document.getElementById("dashWaterFill").style.width = pct + "%";
-        }
-
         function handleMealSubmit(e) {
             e.preventDefault();
             const type = document.getElementById("mealTypeSelect").value;
@@ -1050,9 +1357,11 @@
             document.getElementById("mealInput").value = "";
         }
 
+        // Initialize on load
         document.addEventListener("DOMContentLoaded", () => {
             syncUI();
             renderRecipes("all");
+            renderQuizQuestion();
         });
     </script>
 </body>
